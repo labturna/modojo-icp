@@ -1,0 +1,122 @@
+.container {
+    position: relative;
+    z-index: 2;
+    /* Ensure content is above the gradient */
+}
+
+ul {
+    padding-left: 1.5rem;
+    /* Adjust for list alignment */
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@keyframes wordPullUp {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .word-pull-up {
+    display: inline-block;
+    animation: wordPullUp 1s ease-out;
+  }
+
+.shimmer-button {
+    position: relative;
+    overflow: hidden;
+    background: #635985; /* Base background color */
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .shimmer-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: rotate(30deg);
+    animation: shimmer 1.5s infinite;
+    z-index: 1;
+    opacity: 0.6;
+  }
+  
+  .shimmer-button:hover {
+    background-color: #7a6f9f; /* Slightly lighter color on hover */
+    color: #fff; /* Text color remains white */
+  }
+  
+  .shimmer-button span {
+    position: relative;
+    z-index: 2; /* Ensure text is above the shimmer effect */
+  }
+  
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .gradient-shadow {
+    position: relative;
+    display: inline-block;
+}
+
+.gradient-shadow::before {
+    margin-top: 60px;
+    content: '';
+    position: absolute;
+    top: 45px;
+    left: 0;
+    right: 0;
+    bottom: -60px;
+    z-index: -1;
+    filter: blur(8px);
+    background: linear-gradient(45deg, rgba(63, 94, 251, 0.6), rgba(252, 70, 107, 0.6));
+    transform: scale(4, 5);
+    border-radius: 8px;
+}
+
+.image-gradient {
+  position: relative;
+  display: inline-block;
+}
+
+.image-gradient img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* İsteğe bağlı olarak köşe yuvarlama */
+}
+
+.image-gradient::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(24, 18, 43, 0) 0%, #18122B 100%);
+  border-radius: 8px; /* Resimle uyumlu köşe yuvarlama */
+}

@@ -1,0 +1,140 @@
+{
+    "courses": [
+        {
+            "title": "Arithmetic Operators",
+            "description": "Basic arithmetic operations like addition, subtraction, multiplication, and division in Motoko."
+        },
+        {
+            "title": "Expressions",
+            "description": "Understanding and using expressions in Motoko for evaluating values and performing actions."
+        },
+        {
+            "title": "Functions",
+            "description": "Learn how to define and use functions in Motoko, including arguments and return values."
+        },
+        {
+            "title": "Immutable Variables",
+            "description": "Explanation of variables that cannot be changed after their initial assignment."
+        },
+        {
+            "title": "Logical Expressions",
+            "description": "Using logical operators like AND, OR, and NOT to build conditional expressions."
+        },
+        {
+            "title": "Mutable Variables",
+            "description": "Learn how to declare and modify variables that can change their values during execution."
+        },
+        {
+            "title": "Printing Values",
+            "description": "Learn how to output and display values using the print functions in Motoko."
+        },
+        {
+            "title": "Arrays",
+            "description": "Understanding and working with arrays, including creation and manipulation of lists of elements."
+        },
+        {
+            "title": "Buffers",
+            "description": "Learn about buffer types in Motoko, which provide a way to handle sequences of bytes."
+        },
+        {
+            "title": "Floats",
+            "description": "Working with floating-point numbers for representing non-integer values in Motoko."
+        },
+        {
+            "title": "Integers",
+            "description": "Learn about integer types and their operations for representing whole numbers."
+        },
+        {
+            "title": "Primitive Types",
+            "description": "An overview of basic data types like integers, floats, and booleans in Motoko."
+        },
+        {
+            "title": "Text",
+            "description": "Working with text strings in Motoko, including concatenation and manipulation."
+        },
+        {
+            "title": "Tuples",
+            "description": "Learn about tuples, a way to group multiple values together into a single compound value."
+        },
+        {
+            "title": "Type Annotations",
+            "description": "Understanding how to use type annotations to specify the types of variables and expressions."
+        },
+        {
+            "title": "Variants",
+            "description": "Learn about variants, a way to define values that can take on different types in Motoko."
+        },
+        {
+            "title": "For Loop",
+            "description": "Using for loops to iterate over sequences and perform repeated actions in Motoko."
+        },
+        {
+            "title": "If",
+            "description": "Learn how to use if statements for conditional execution of code."
+        },
+        {
+            "title": "Switch",
+            "description": "Using switch statements to handle multiple conditional branches in Motoko."
+        },
+        {
+            "title": "Switch and Variants",
+            "description": "Learn how to use switch with variant types to handle complex data structures."
+        },
+        {
+            "title": "While Loop",
+            "description": "Using while loops to repeat actions while a certain condition remains true."
+        },
+        {
+            "title": "Async Functions",
+            "description": "Learn how to define and work with asynchronous functions in Motoko for concurrent execution."
+        },
+        {
+            "title": "Classes",
+            "description": "Understanding object-oriented programming in Motoko through classes and instances."
+        },
+        {
+            "title": "Errors",
+            "description": "Handling and throwing errors in Motoko to manage exceptional cases."
+        },
+        {
+            "title": "Generic Types",
+            "description": "Learn how to define and use generic types to create flexible and reusable code."
+        },
+        {
+            "title": "Ignore Expressions",
+            "description": "Learn about ignore expressions to discard values when they are not needed."
+        },
+        {
+            "title": "Modules and Imports",
+            "description": "Understanding how to organize and import code using modules in Motoko."
+        },
+        {
+            "title": "Objects",
+            "description": "Working with objects to store data and define behavior in Motoko."
+        },
+        {
+            "title": "Options",
+            "description": "Learn how to use the Option type to handle values that may or may not be present."
+        },
+        {
+            "title": "Records",
+            "description": "Learn how to use records to group named values together in Motoko."
+        },
+        {
+            "title": "Results",
+            "description": "Using the Result type to handle operations that may either succeed or fail."
+        },
+        {
+            "title": "Defining Actors",
+            "description": "Learn how to define actors in Motoko to represent independent computational entities."
+        },
+        {
+            "title": "Principals",
+            "description": "Understanding principals, which represent identities in the Internet Computer."
+        },
+        {
+            "title": "Shared Types",
+            "description": "Learn how to use shared types for working with distributed systems and actors."
+        }
+    ]
+}

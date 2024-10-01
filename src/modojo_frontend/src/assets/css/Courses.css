@@ -1,0 +1,141 @@
+/* Courses.css */
+
+/* Define the custom property for the gradient angle */
+@property --border-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: '<angle>';
+}
+
+/* Keyframes for the gradient border animation */
+@keyframes spin-slow {
+  0% {
+    --border-angle: 0deg;
+  }
+
+  100% {
+    --border-angle: 360deg;
+  }
+}
+
+/* Animated Gradient Border */
+.animate-border {
+  background: linear-gradient(45deg, rgba(99, 89, 133, 1) 0%, rgba(24, 18, 43, 1) 100%) padding-box,
+    conic-gradient(from var(--border-angle), rgba(99, 89, 133, 0.48) 80%, rgba(28, 55, 133, 0.7) 86%, rgba(63, 82, 168, 0.9) 90%, rgba(99, 89, 133, 0.48) 94%, rgba(99, 89, 133, 0.48)) border-box;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  animation: spin-slow 6s linear infinite;
+}
+
+/* Card Content Styles */
+.card-content {
+  padding: 1.25rem;
+  border-radius: 12px;
+  color: white;
+  margin-left: 1.3rem;
+}
+
+.card-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.card-content p {
+  margin-bottom: 1rem;
+}
+
+.card-content button {
+  background-color: #635985;
+  /* Base background color */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-content button:hover {
+  background-color: #7a6f9f;
+  /* Slightly lighter color on hover */
+  color: #fff;
+  /* Text color remains white */
+}
+
+.card-content button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(30deg);
+  animation: shimmer 1.5s infinite;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.card-content button span {
+  position: relative;
+  z-index: 2;
+  /* Ensure text is above the shimmer effect */
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Style for Coming Soon button */
+.coming-soon {
+  background-color: #d1d5db;
+  /* Light gray for disabled state */
+  color: white;
+  cursor: not-allowed;
+}
+
+/* Scroll Container Styles */
+.scroll-container {
+  display: flex;
+  overflow: hidden;
+  padding: 0 1rem;
+  /* Add padding on left and right */
+  position: relative;
+  /* For positioning the scroll buttons */
+}
+
+/* Scroll Buttons Styles */
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 2;
+  /* Ensure buttons are above the scrollable content */
+}
+
+.scroll-button.left {
+  left: 0;
+}
+
+.scroll-button.right {
+  right: 0;
+}

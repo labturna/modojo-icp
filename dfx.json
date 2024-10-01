@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "modojo_backend": {
+      "main": "src/modojo_backend/main.mo",
+      "type": "motoko"
+    },
+    "modojo_frontend": {
+      "dependencies": [
+        "modojo_backend"
+      ],
+      "source": [
+        "src/modojo_frontend/assets"
+      ],
+        
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

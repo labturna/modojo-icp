@@ -1,0 +1,95 @@
+.split-container {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    overflow: hidden;
+}
+
+.split-content {
+    display: flex;
+    flex: 1;
+    min-width: 30%;
+    overflow: hidden;
+}
+.gutter {
+    background-color: #bebec1;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative; /* Çizgiyi konumlandırmak için */
+    border-radius: 4px; /* Yuvarlatma efekti */
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Gutter hover efekti */
+  .gutter:hover {
+    background-color: #9e9e92;
+  }
+  
+  /* Yatay gutter */
+  .gutter-horizontal {
+    cursor: col-resize;
+    height: 100vh;
+  }
+  
+  /* Dikey gutter */
+  .gutter-vertical {
+    cursor: row-resize;
+    width: 100%;
+  }
+  
+.custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    /* Scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Scrollbar color */
+    border-radius: 8px;
+    /* Rounded corners */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Color on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Track color */
+}
+
+.content {
+    background-color: #1e1e36;
+    color: white;
+    padding: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.editor {
+    background-color: #1e1e36;
+    color: white;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.output {
+    flex: 1;
+    background-color: #1e1e36;
+    color: white;
+    padding: 1rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 2.5rem);
+    overflow: 'hidden';
+    border: '1px solid #ccc';
+    overflow: hidden;
+    box-sizing: border-box;
+}
