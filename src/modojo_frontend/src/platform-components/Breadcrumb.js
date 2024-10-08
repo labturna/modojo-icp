@@ -3,13 +3,41 @@ import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import '../assets/css/Breadcrumb.css';
+import  { HttpAgent, Actor} from '@dfinity/agent';
+import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
+
+const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
 
 const BreadcrumbCard = ({ items, page, onSelect }) => {
   const { handleLogout, userId } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Select');
   const dropdownRef = useRef(null);
+  console.log(canisterId);
+  useEffect(() => {
+    const logInUserToBackend = async () => {
+      if (userId && canisterId) {
+        try {
+          const agent = new HttpAgent();
+          // If running locally, you may need to disable fetch root certificate check
+          if (process.env.NODE_ENV === 'development') {
+            agent.fetchRootKey();
+          }
+          const modojoActor = Actor.createActor(ModojoIDL, {
+            agent,
+            canisterId,
+          });
+          await modojoActor.logInUser(userId);
+        } catch (error) {
+          console.error("Failed to log in user to backend:", error);
+        }
+      } else {
+        console.error("User ID or Canister ID is not defined.");
+      }
+    };
 
+    logInUserToBackend();
+  }, [userId]);
   const getShortenedUserId = (userId) => {
     if (userId && userId.length > 6) {
       return `${userId.slice(0, 3)}...${userId.slice(-3)}`;

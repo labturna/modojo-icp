@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBook, faUserClock, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { Actor, HttpAgent } from '@dfinity/agent';
+import { canisterId, createActor } from '../declarations/modojo_backend';
 
 const InfoCard = ({ title, icon, bgColor, children }) => (
   <div className={`p-4 mt-5 w-full rounded-lg shadow-md text-white ${bgColor}`}>
@@ -17,6 +19,21 @@ const InfoCard = ({ title, icon, bgColor, children }) => (
 );
 
 const DashboardInfoCards = () => {
+  const [totalUsers, setTotalUsers] = useState(0);
+  useEffect(() => {
+    const fetchTotalUsers = async () => {
+      try {
+        const agent = new HttpAgent();
+        const modojoActor = createActor(canisterId, { agent });
+        const users = await modojoActor.getTotalUsers();
+        setTotalUsers(users);
+      } catch (error) {
+        console.error("Failed to fetch total users:", error);
+      }
+    };
+
+    fetchTotalUsers();
+  }, []);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Total Users */}
@@ -25,7 +42,7 @@ const DashboardInfoCards = () => {
         icon={faUser}
         bgColor="bg-gradient-to-r from-purple-800 via-purple-500 to-purple-100"
       >
-        <p className="text-3xl font-bold">5,420</p>
+        <p className="text-3xl font-bold">{totalUsers}</p>
       </InfoCard>
 
       {/* Total Lessons */}

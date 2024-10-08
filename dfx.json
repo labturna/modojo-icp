@@ -6,12 +6,10 @@
     },
     "modojo_frontend": {
       "dependencies": [
-        "modojo_backend"
       ],
       "source": [
         "src/modojo_frontend/assets"
       ],
-        
       "type": "assets"
     }
   },
@@ -24,3 +22,4 @@
   "output_env_file": ".env",
   "version": 1
 }
+
