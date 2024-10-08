@@ -1,6 +1,7 @@
 {
     "name": "modojo",
     "type": "module",
+    "version":"0.1.0",
     "scripts": {
         "start": "npm start --workspaces --if-present",
         "prebuild": "npm run prebuild --workspaces --if-present",
