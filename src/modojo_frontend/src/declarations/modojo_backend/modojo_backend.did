@@ -2,7 +2,9 @@ service : {
   completeChallenge: (principal, text) -> (bool);
   debugAllProgress: () -> ();
   getCompletedChallenges: (principal) -> (vec text) query;
+  getMonthlyUsers: () -> (vec nat) query;
   getTotalUsers: () -> (nat) query;
+  getWeeklyUsers: () -> (vec nat) query;
   isChallengeCompleted: (principal, text) -> (bool) query;
   logInUser: (principal) -> (bool);
 }

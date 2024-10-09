@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBook, faUserClock, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBook, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
 
@@ -56,7 +56,7 @@ const DashboardInfoCards = () => {
   }, []);  
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {/* Total Users */}
       <InfoCard
         title="Total Users"
@@ -68,20 +68,11 @@ const DashboardInfoCards = () => {
 
       {/* Total Lessons */}
       <InfoCard
-        title="Total Lessons"
+        title="Total Lessons" 
         icon={faBook}
         bgColor="bg-gradient-to-r from-teal-800 via-teal-500 to-teal-100"
       >
         <p className="text-3xl font-bold">120</p>
-      </InfoCard>
-
-      {/* Users Today */}
-      <InfoCard
-        title="Users Today"
-        icon={faUserClock}
-        bgColor="bg-gradient-to-r from-yellow-800 via-yellow-500 to-yellow-100"
-      >
-        <p className="text-3xl font-bold">340</p>
       </InfoCard>
 
       {/* Challenges by Difficulty */}

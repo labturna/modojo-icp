@@ -1,43 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { HttpAgent, Actor } from '@dfinity/agent';
+import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
 
-// ChartJS bileşenlerini kaydedelim
+// Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LineChartComponent = () => {
-  // Haftalık veriler
-  const weeklyData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], // Son 7 gün
+  const [weeklyData, setWeeklyData] = useState({
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
       {
         label: 'Weekly Users',
-        data: [120, 150, 180, 170, 220, 240, 200], // Örnek veri
+        data: [0, 0, 0, 0, 0, 0, 0], // Initial placeholder values
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.4, // Hatların kıvrımlı olması için
+        tension: 0.4,
       },
     ],
-  };
+  });
 
-  // Aylık veriler
-  const monthlyData = {
+  const [monthlyData, setMonthlyData] = useState({
     labels: [
-      'January', 'February', 'March', 'April', 'May', 'June', 
+      'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
-    ], // Son 12 ay
+    ],
     datasets: [
       {
         label: 'Monthly Users',
-        data: [1000, 1200, 900, 1400, 1500, 1700, 1600, 1800, 1900, 2100, 2300, 2500], // Örnek veri
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Initial placeholder values
         borderColor: 'rgba(153, 102, 255, 1)',
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
         tension: 0.4,
       },
     ],
-  };
+  });
 
-  // Chart konfigürasyonları
+  useEffect(() => {
+    const fetchUserStatistics = async () => {
+      try {
+        const agent = new HttpAgent();
+        const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
+
+        if (!canisterId) {
+          throw new Error("Canister ID is not defined. Please check your environment variables.");
+        }
+
+        if (process.env.REACT_APP_ENV === 'development') {
+          await agent.fetchRootKey();
+        }
+
+        const modojoActor = Actor.createActor(ModojoIDL, {
+          agent,
+          canisterId,
+        });
+
+        let weeklyUsers = await modojoActor.getWeeklyUsers(); 
+        weeklyUsers = weeklyUsers.map(userCount => {
+          return userCount <= Number.MAX_SAFE_INTEGER ? Number(userCount) : userCount.toString();
+        });
+        setWeeklyData(prevData => ({
+          ...prevData,
+          datasets: [
+            {
+              ...prevData.datasets[0],
+              data: weeklyUsers,
+            },
+          ],
+        }));
+
+        // Fetch monthly user statistics
+        let monthlyUsers = await modojoActor.getMonthlyUsers();
+        monthlyUsers = monthlyUsers.map(userCount => {
+          return userCount <= Number.MAX_SAFE_INTEGER ? Number(userCount) : userCount.toString();
+        });
+        setMonthlyData(prevData => ({
+          ...prevData,
+          datasets: [
+            {
+              ...prevData.datasets[0],
+              data: monthlyUsers,
+            },
+          ],
+        }));
+      } catch (error) {
+        console.error("Failed to fetch user statistics:", error);
+      }
+    };
+
+    fetchUserStatistics();
+  }, []);
+
+  // Chart configuration
   const options = {
     responsive: true,
     plugins: {
@@ -45,50 +100,48 @@ const LineChartComponent = () => {
         display: true,
         position: 'top',
         labels: {
-          color: '#ffffff', // Legend text rengini beyaz yapıyoruz
+          color: '#ffffff',
         },
       },
       title: {
         display: true,
         text: 'User Statistics',
-        color: '#ffffff', // Başlık rengini beyaz yapıyoruz
+        color: '#ffffff',
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#ffffff', // X ekseni yazı rengi
+          color: '#ffffff',
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', // X ekseni grid çizgisi
+          color: 'rgba(255, 255, 255, 0.1)',
         },
       },
       y: {
         ticks: {
-          color: '#ffffff', // Y ekseni yazı rengi
+          color: '#ffffff',
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', // Y ekseni grid çizgisi
+          color: 'rgba(255, 255, 255, 0.1)',
         },
         beginAtZero: true,
       },
     },
     layout: {
-      padding: 20, // Grafik kenarlarına boşluk ekliyoruz
+      padding: 20,
     },
-    // Arka plan rengi
-    backgroundColor: '#1e1e36',
   };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-5">
-      {/* Haftalık kullanıcı grafiği */}
+      {/* Weekly Users Chart */}
       <div className="bg-[#1e1e36] p-4 rounded-lg shadow-md">
         <h2 className="text-xl font-bold text-white mb-4">Weekly Users</h2>
         <Line data={weeklyData} options={options} />
       </div>
 
-      {/* Aylık kullanıcı grafiği */}
+      {/* Monthly Users Chart */}
       <div className="bg-[#1e1e36] p-4 rounded-lg shadow-md">
         <h2 className="text-xl font-bold text-white mb-4">Monthly Users</h2>
         <Line data={monthlyData} options={options} />
@@ -98,3 +151,4 @@ const LineChartComponent = () => {
 };
 
 export default LineChartComponent;
+

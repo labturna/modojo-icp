@@ -6,7 +6,9 @@ export interface _SERVICE {
   'completeChallenge' : ActorMethod<[Principal, string], boolean>,
   'debugAllProgress' : ActorMethod<[], undefined>,
   'getCompletedChallenges' : ActorMethod<[Principal], Array<string>>,
+  'getMonthlyUsers' : ActorMethod<[], Array<bigint>>,
   'getTotalUsers' : ActorMethod<[], bigint>,
+  'getWeeklyUsers' : ActorMethod<[], Array<bigint>>,
   'isChallengeCompleted' : ActorMethod<[Principal, string], boolean>,
   'logInUser' : ActorMethod<[Principal], boolean>,
 }

@@ -14,10 +14,8 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Select');
   const dropdownRef = useRef(null);
-  console.log(backendCanisterId);
   useEffect(() => {
     const logInUserToBackend = async () => {
-      console.log("Canister ID:", canisterId);
       if (userId && canisterId) {
         try {
           const agent = new HttpAgent();

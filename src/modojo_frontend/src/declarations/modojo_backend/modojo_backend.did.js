@@ -7,7 +7,9 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(IDL.Text)],
         ['query'],
       ),
+    'getMonthlyUsers' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
     'getTotalUsers' : IDL.Func([], [IDL.Nat], ['query']),
+    'getWeeklyUsers' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
     'isChallengeCompleted' : IDL.Func(
         [IDL.Principal, IDL.Text],
         [IDL.Bool],

@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
         const identity = client.getIdentity();
         const principal = identity.getPrincipal();
         setUserId(principal.toString());  // Kullanıcı ID'sini sakla
-        console.log("User ID:", principal.toString());
       }
     } catch (error) {
       console.error("Failed to initialize AuthClient:", error); // Error handling
@@ -35,7 +34,6 @@ export const AuthProvider = ({ children }) => {
           identityProvider: 'https://identity.ic0.app',
           onSuccess: () => {
             setIsAuthenticated(true); // Update state on successful login
-            console.log('User logged in:', true); // Debug log
           },
         });
       } catch (error) {
