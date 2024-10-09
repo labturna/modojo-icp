@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBook, faUserClock, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Actor, HttpAgent } from '@dfinity/agent';
-import { canisterId, createActor } from '../declarations/modojo_backend';
+import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
 
 const InfoCard = ({ title, icon, bgColor, children }) => (
   <div className={`p-4 mt-5 w-full rounded-lg shadow-md text-white ${bgColor}`}>
@@ -20,20 +20,41 @@ const InfoCard = ({ title, icon, bgColor, children }) => (
 
 const DashboardInfoCards = () => {
   const [totalUsers, setTotalUsers] = useState(0);
-  useEffect(() => {
+    useEffect(() => {
     const fetchTotalUsers = async () => {
       try {
+        // Fetch the canister ID from the environment variables
+        const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
+
+        if (!canisterId) {
+          throw new Error("Canister ID is not defined. Please check your environment variables.");
+        }
+
+        // Create a new agent
         const agent = new HttpAgent();
-        const modojoActor = createActor(canisterId, { agent });
+
+        // Disable certificate verification for local development
+        if (process.env.REACT_APP_ENV === 'development') {
+          await agent.fetchRootKey();
+        }
+
+        // Create the actor for interacting with the canister
+        const modojoActor = Actor.createActor(ModojoIDL, {
+          agent,
+          canisterId,
+        });
+
+        // Fetch total users from the canister
         const users = await modojoActor.getTotalUsers();
-        setTotalUsers(users);
+        setTotalUsers(Number(users));
       } catch (error) {
         console.error("Failed to fetch total users:", error);
       }
     };
 
     fetchTotalUsers();
-  }, []);
+  }, []);  
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Total Users */}

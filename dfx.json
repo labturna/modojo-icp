@@ -8,7 +8,7 @@
       "dependencies": [
       ],
       "source": [
-        "src/modojo_frontend/assets"
+        "src/modojo_frontend/build"
       ],
       "type": "assets"
     }

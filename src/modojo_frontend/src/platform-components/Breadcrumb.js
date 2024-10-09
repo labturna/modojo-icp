@@ -5,29 +5,34 @@ import { faUser, faSignOutAlt, faCircleChevronDown } from '@fortawesome/free-sol
 import '../assets/css/Breadcrumb.css';
 import  { HttpAgent, Actor} from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
+import { Principal } from "@dfinity/principal";
 
-const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
+const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID;
 
 const BreadcrumbCard = ({ items, page, onSelect }) => {
   const { handleLogout, userId } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Select');
   const dropdownRef = useRef(null);
-  console.log(canisterId);
+  console.log(backendCanisterId);
   useEffect(() => {
     const logInUserToBackend = async () => {
+      console.log("Canister ID:", canisterId);
       if (userId && canisterId) {
         try {
           const agent = new HttpAgent();
-          // If running locally, you may need to disable fetch root certificate check
-          if (process.env.NODE_ENV === 'development') {
-            agent.fetchRootKey();
+	  console.log("ENV:", process.env.NODE_ENV);
+          if (process.env.REACT_APP_ENV === 'development') {
+            await agent.fetchRootKey().catch(err => {
+                console.log(err)
+            });
           }
           const modojoActor = Actor.createActor(ModojoIDL, {
             agent,
             canisterId,
           });
-          await modojoActor.logInUser(userId);
+	  const principalUser = Principal.fromText(userId);
+          await modojoActor.logInUser(principalUser);
         } catch (error) {
           console.error("Failed to log in user to backend:", error);
         }
