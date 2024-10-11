@@ -214,7 +214,9 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             document.querySelector('.output').innerHTML = `<pre style="color: red;">Error: ${error.message}</pre>`;
         }
     };
-    
+    const clearOutput = () => {
+        document.querySelector('.output').innerHTML = '';
+    };
     const handleClear = () => {
         setCode('');
     };
@@ -238,6 +240,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             const { section, index } = findLessonIndex(courseData, selectedLesson);
             if (section && index > 0) {
                 const previousLessonSlug = section.children[index - 1].slug;
+                clearOutput();
                 setSelectedLesson(previousLessonSlug);
                 if (typeof onLessonChange === 'function') {
                     onLessonChange(previousLessonSlug);
@@ -250,6 +253,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                     setSelectedLesson(previousLessonSlug);
                     if (typeof onLessonChange === 'function') {
                         onLessonChange(previousLessonSlug);
+                        clearOutput();
                     }
                 }
             }
@@ -261,6 +265,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             const { section, index } = findLessonIndex(courseData, selectedLesson);
             if (section && index < section.children.length - 1) {
                 const nextLessonSlug = section.children[index + 1].slug;
+                clearOutput();
                 setSelectedLesson(nextLessonSlug);
                 if (typeof onLessonChange === 'function') {
                     onLessonChange(nextLessonSlug);
