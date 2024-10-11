@@ -7,19 +7,73 @@ import  { HttpAgent, Actor} from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
 import { Principal } from "@dfinity/principal";
 
-const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID;
+const RadialProgressBar = ({ percentage }) => {
+  const radius = 20; // Adjust radius to fit within the SVG
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  // Function to dynamically determine color based on percentage
+  const getColor = (percentage) => {
+    if (percentage < 30) return '#ff4b5c'; // Red for low percentage
+    if (percentage < 60) return '#f7b801'; // Yellow for medium percentage
+    return '#4caf50'; // Green for high percentage
+  };
+
+  return (
+    <svg
+      width="47"  // Set the width to 45px
+      height="47" // Set the height to 45px
+      viewBox="0 0 45 45" // Ensure the viewBox matches the size of the SVG
+      style={{ transform: 'rotate(-90deg)' }} // Rotate to start progress from the top
+    >
+      <circle
+        cx="22.5" // Center the circle in the middle of the SVG (half of width/height)
+        cy="22.5" // Center the circle in the middle of the SVG
+        r={radius} // Set the radius
+        fill="none"
+        stroke="#ddd"
+        strokeWidth="4" // Set stroke width
+      />
+      <circle
+        cx="22.5" // Center the circle in the middle of the SVG
+        cy="22.5" // Center the circle in the middle of the SVG
+        r={radius} // Set the radius
+        fill="none"
+        stroke={getColor(percentage)}
+        strokeWidth="4"
+        strokeDasharray={circumference}
+        strokeDashoffset={strokeDashoffset}
+        strokeLinecap="round"
+        style={{
+          transition: 'stroke-dashoffset 0.35s',
+        }}
+      />
+      <text
+        x="22.5"
+        y="22.5"
+        textAnchor="middle"
+        dy="0.3em"
+        fontSize="16px" // Adjust font size for smaller SVG
+        fill="#fff"
+      >
+        {percentage}%
+      </text>
+    </svg>
+  );
+};
+const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
 
 const BreadcrumbCard = ({ items, page, onSelect }) => {
   const { handleLogout, userId } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Select');
   const dropdownRef = useRef(null);
+  const [progress, setProgress] = useState(10);
   useEffect(() => {
     const logInUserToBackend = async () => {
       if (userId && canisterId) {
         try {
           const agent = new HttpAgent();
-	  console.log("ENV:", process.env.NODE_ENV);
           if (process.env.REACT_APP_ENV === 'development') {
             await agent.fetchRootKey().catch(err => {
                 console.log(err)
@@ -33,7 +87,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
           await modojoActor.logInUser(principalUser);
         } catch (error) {
           console.error("Failed to log in user to backend:", error);
-        }
+        } 
       } else {
         console.error("User ID or Canister ID is not defined.");
       }
@@ -192,11 +246,16 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
           )}
 
           <div className="flex space-x-2">
-            <li className="flex items-center p-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+            {(page === 'practice' || page === 'challenges') && (
+              <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+                <RadialProgressBar percentage={progress} />
+              </li>
+            )}
+            <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
               {userId && <span className="text-[#b3d4f9] mr-2">{getShortenedUserId(userId)}</span>} 
               <FontAwesomeIcon icon={faUser} size="lg" className="mr-2" />
             </li>
-            <li className="flex items-center p-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+            <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
               <FontAwesomeIcon icon={faSignOutAlt} size="lg" className="mr-2" onClick={handleLogout} />
             </li>
           </div>

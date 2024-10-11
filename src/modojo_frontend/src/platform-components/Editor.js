@@ -8,7 +8,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import '../assets/css/markdown.css';
 import mo from 'motoko/interpreter';
-
 const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, pageType }) => {
     const [jsonPath, setJsonPath] = useState('');
     const [selectedLesson, setSelectedLesson] = useState(initialSelectedLesson);
@@ -21,13 +20,9 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
     const [showSolution, setShowSolution] = useState(false);
 
     useEffect(() => {
-        // Web worker yapılandırmasını yap
         window.MonacoEnvironment = {
             getWorkerUrl: function (workerId, label) {
-                if (label === 'json') {
-                    return '/monacoWorker.js';
-                }
-                return '/monacoWorker.js'; // Diğer diller için de aynı worker'ı kullanabilirsiniz
+                return '/monacoWorker.js';
             }
         };
     }, []);
@@ -46,7 +41,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json(); // JSON olarak döndür
+                return response.json();
             })
             .then((data) => {
                 setCourseData(data.lessons);
@@ -62,8 +57,6 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             })
             .catch((err) => console.error('Error loading course data:', err));
     }, [initialSelectedLesson, onLessonChange, jsonPath]);
-    
-
 
     useEffect(() => {
         if (courseData.length > 0 && selectedLesson) {
@@ -103,7 +96,6 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
         }
     }, [lessonPath, pageType]);
 
-
     useEffect(() => {
         configureMonaco();
     }, []);
@@ -115,28 +107,114 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
     const onChange = (newValue) => {
         setCode(newValue);
     };
-
+    async function runTests(userCode, tests) {
+        try {
+            // Load the user's code into the Motoko interpreter
+            await mo.clearPackages();
+            await mo.installPackages({ base: 'dfinity/motoko-base/master/src' });
+            let results = [];
+    
+            // Iterate over each test case, append it, and run
+            for (const test of tests) {
+                const { description, input, expected, functionName } = test;
+                
+                // Extract input parameters and assign them to variables
+                let inputDeclarations = '';
+                let inputArgs = '';
+                if (typeof input === 'object' && !Array.isArray(input)) {
+                    inputDeclarations = Object.entries(input)
+                        .map(([key, value]) => `let ${key} = ${JSON.stringify(value)};`)
+                        .join('\n');
+                    inputArgs = Object.keys(input).join(', ');
+                } else {
+                    inputDeclarations = `let input = ${JSON.stringify(input)};`;
+                    inputArgs = 'input';
+                }
+    
+                // Append test code to the user function code
+                const appendedCode = `import Debug "mo:base/Debug";
+    ${userCode}
+    ${inputDeclarations}
+    // Test Case: ${description}
+    let testResult = ${functionName}(${inputArgs});
+    Debug.print(debug_show(testResult));`;
+                // console.log(appendedCode);
+                mo.write('Main.mo', appendedCode);
+                const result = await mo.run('Main.mo');
+    
+                try {
+                    if (result.stdout) {
+                        // Extract relevant output
+                        const cleanOutput = result.stdout.trim().split('\n')[0];
+                        let parsedOutput;
+                        try {
+                            parsedOutput = JSON.parse(cleanOutput);
+                        } catch (e) {
+                            parsedOutput = cleanOutput === 'true' ? true : cleanOutput === 'false' ? false : cleanOutput;
+                        }
+                        const success = JSON.stringify(parsedOutput) === JSON.stringify(expected);
+                        if (success) {
+                            results.push({ description, success, output: parsedOutput, expected });
+                        } else {
+                            results.push({ description, success: false, output: parsedOutput, input, expected });
+                        }
+                    } else {
+                        throw new Error('No output from the function');
+                    }
+                } catch (error) {
+                    results.push({ description, success: false, error: error.message, input, expected });
+                }
+            }
+    
+            return results;
+        } catch (error) {
+            return { error: 'Code compilation failed: ' + error.message };
+        }
+    }
+    
     const handleRun = async () => {
         try {
             await mo.clearPackages();
             await mo.installPackages({ base: 'dfinity/motoko-base/master/src' });
             const codeToRun = code;
             mo.write('Main.mo', codeToRun);
-            const result = await mo.run('Main.mo');
-            if (result.result.error) {
-                document.querySelector('.output').innerHTML = `<pre style="color: red;">Hata: ${result.result.error}</pre>`;
-            } else if (result.stdout) {
-                document.querySelector('.output').innerHTML = `<pre>${result.stdout}</pre>`;
-            } else {
-                document.querySelector('.output').innerHTML = `<pre></pre>`;
+    
+            // Load test cases from the JSON endpoint
+            const response = await fetch('/challenges/testCases.json');
+            if (!response.ok) {
+                throw new Error('Failed to load test cases');
+            }
+            const testCases = await response.json();
+    
+            // Run tests for each lesson in the testCases file
+            for (const lesson of testCases.lessons) {
+                if (selectedLesson === lesson.slug) {
+                    const results = await runTests(codeToRun, lesson.tests.map(test => ({
+                        description: test.description,
+                        functionName: test.functionName,
+                        input: test.input,
+                        expected: test.expected
+                    })));
+                    if (!Array.isArray(results)) {
+                        throw new Error(results.error);
+                    }
+                    // Display results in the output section of the interface
+                    let outputHTML = '';
+                    results.forEach((result) => {
+                        if (result.success) {
+                            outputHTML += `<pre style="color: green;">Test Passed: ${result.description} - Expected: ${JSON.stringify(result.expected)}</pre>`;
+                        } else {
+                            outputHTML += `<pre style="color: red;">Test Failed: ${result.description} - Input: ${JSON.stringify(result.input)} - Output: ${JSON.stringify(result.output)} - Expected: ${JSON.stringify(result.expected)}</pre>`;
+                        }
+                    });
+                    document.querySelector('.output').innerHTML = outputHTML;
+                }
             }
         } catch (error) {
             document.querySelector('.output').innerHTML = `<pre style="color: red;">Error: ${error.message}</pre>`;
         }
     };
-
-
-
+    
     const handleClear = () => {
         setCode('');
     };
@@ -208,11 +286,9 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             fetch(`${pageType === 'practice' ? '/content/' : '/challenges/'}${solutionPath}`)
                 .then(response => response.text())
                 .then(data => setSolutionContent(data))
-                .catch(() => setSolutionContent('')) // Çözüm bulunamazsa boş göster
+                .catch(() => setSolutionContent(''));
         }
     };
-
-
 
     const handleLessonSelect = (event) => {
         const selectedSlug = event.target.value;

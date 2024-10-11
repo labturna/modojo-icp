@@ -15,14 +15,14 @@
       "children": [
         {
           "name": "Two Sum",
-          "slug": "two-sum",
+          "slug": "twoSum",
           "content": "easy-challenges/two-sum/lesson.md",
           "files": ["easy-challenges/two-sum/main.mo"],
           "solution": "easy-challenges/two-sum/solution.md"
         },
         {
           "name": "Palindrome Numbers",
-          "slug": "palindrome-numbers",
+          "slug": "isPalindrome",
           "content": "easy-challenges/palindrome-numbers/lesson.md",
           "files": ["easy-challenges/palindrome-numbers/main.mo"],
           "solution": "easy-challenges/palindrome-numbers/solution.md"

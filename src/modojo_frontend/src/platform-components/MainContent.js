@@ -6,8 +6,7 @@ import BrowserEditor from './Editor';
 const MainContent = () => {
   const [selectedLesson, setSelectedLesson] = useState(null);
   const handleLessonChange = (newLessonSlug) => {
-    console.log("New lesson selected:", newLessonSlug);
-    setSelectedLesson(newLessonSlug); // Update the selected lesson
+  setSelectedLesson(newLessonSlug); 
 };
   const handleSelectLesson = (slug) => {
     setSelectedLesson(slug);

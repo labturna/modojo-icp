@@ -19,8 +19,6 @@ actor ModojoProgressTracker {
     if (userProgress.get(user) == null) {
       userProgress.put(user, []);
       totalUsers += 1;
-
-      // Update weekly and monthly users count
       let currentDay = getCurrentDay();
       let currentMonth = getCurrentMonth();
       weeklyUsers[currentDay] := weeklyUsers[currentDay] + 1;
