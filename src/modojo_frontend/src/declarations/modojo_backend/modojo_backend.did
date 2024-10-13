@@ -1,10 +1,18 @@
+type UserProgressType = 
+ record {
+   completedChallengeCount: nat;
+   completedChallenges: vec text;
+   registrationDate: Time;
+   score: float64;
+ };
+type Time = int;
 service : {
-  completeChallenge: (principal, text) -> (bool);
+  completeChallenge: (principal, text, text, bool) -> (bool);
   debugAllProgress: () -> ();
-  getCompletedChallenges: (principal) -> (vec text) query;
+  getAllUsersDetails: () -> (vec UserProgressType) query;
   getMonthlyUsers: () -> (vec nat) query;
   getTotalUsers: () -> (nat) query;
+  getUserDetails: (principal) -> (opt UserProgressType) query;
   getWeeklyUsers: () -> (vec nat) query;
-  isChallengeCompleted: (principal, text) -> (bool) query;
   logInUser: (principal) -> (bool);
 }

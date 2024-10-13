@@ -6,7 +6,7 @@ module {
     public type ChallengeAttemps = HashMap.HashMap<Text, Nat>;
     public type UserProgressType = {
         completedChallengeCount: Nat;
-        successRate: Float; // Başarı oranı
+        score: Float; // Başarı oranı
         registrationDate: Time.Time; // Kayıt tarihi
         completedChallenges: [Text]; // Tamamlanan challenge'lar
         // attempts: HashMap.HashMap<Text, Nat>; // Challenge başına deneme sayısı

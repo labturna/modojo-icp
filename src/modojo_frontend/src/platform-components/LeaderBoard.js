@@ -33,6 +33,7 @@ const Leaderboard = () => {
                 // Fetch total users from the canister
                 console.log('modojoActor', modojoActor)
                 const users = await modojoActor.getAllUsersDetails();
+                console.log('users', users)
                 setLeaderBoardUsers(users);
             } catch (error) {
                 console.error("Failed to fetch total users:", error);
@@ -54,8 +55,8 @@ const Leaderboard = () => {
                         <div className="grid grid-cols-4 gap-4 font-bold">
                             <div>Completed Challenges Count</div>
                             <div>Registration Date</div>
-                            <div>Completed Challenges</div>
-                            <div>Success Rate</div>
+                            <div>Completed Challenges List(ID)</div>
+                            <div>Score</div>
                         </div>
                         <div className="mt-4">
                             {leaderBoardUsers.map((entry, index) => (
@@ -63,14 +64,14 @@ const Leaderboard = () => {
                                     key={index}
                                     className={`grid grid-cols-4 gap-4 py-2 px-4 hover:bg-[#2e2e50] rounded-lg`}
                                 >
-                                    <div className="text-lg">{entry.completedChallengeCount}</div>
+                                    <div className="text-lg">{Number(entry.completedChallengeCount)}</div>
                                     <div className="text-lg">
                                         {new Date(Number(entry.registrationDate) / 1_000_000).toLocaleDateString()}
                                     </div>
                                     <div className="text-lg">
                                         {entry.completedChallenges.join(', ')}
                                     </div>
-                                    <div className="text-lg">{entry.successRate}%</div>
+                                    <div className="text-lg">{entry.score}</div>
                                 </div>
                             ))}
                         </div>

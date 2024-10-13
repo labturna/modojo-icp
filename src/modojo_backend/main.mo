@@ -34,7 +34,7 @@ public func logInUser(user: Principal) : async Bool {
             Debug.print(debug_show(user));
             userProgress.put(user, {
                 completedChallengeCount = 0; // Başlangıçta tamamlanan challenge sayısı
-                successRate = 0.0; // Başlangıçta başarı oranı
+                score = 0.0; // Başlangıçta başarı oranı
                 registrationDate = Time.now(); // Kayıt tarihi
                 completedChallenges = []; // Tamamlanan challenge'lar listesi
                 // attempts = HashMap.HashMap<Text, Nat>(10, Text.equal, Text.hash); // Boş attempts map'i
@@ -92,12 +92,14 @@ public func logInUser(user: Principal) : async Bool {
   // --------------------------------------------------------------------
 
 
-public query func completeChallenge(user: Principal, challengeId: Text, difficulty: Text, isSuccess: Bool) : async Bool {
+public func completeChallenge(user: Principal, challengeId: Text, difficulty: Text, isSuccess: Bool) : async Bool {
     // Check if the user already has progress data
     switch (userProgress.get(user)) {
         case (?progress) {
+            Debug.print(debug_show(progress));
             // Update the number of attempts
             let attempts = challengeAttemps.get(challengeId);
+            Debug.print(debug_show(attempts));
             let newAttempts = switch (attempts) {
                 case (null) 1;
                 case (?count) count + 1;
@@ -105,7 +107,7 @@ public query func completeChallenge(user: Principal, challengeId: Text, difficul
             challengeAttemps.put(challengeId, newAttempts);
 
             if (isSuccess == false) {
-                // If the attempt failed, only the attempt count is updated
+                challengeAttemps.put(challengeId, newAttempts);
                 return false;
             };
 
@@ -115,14 +117,16 @@ public query func completeChallenge(user: Principal, challengeId: Text, difficul
             } else {
                 // if successfully completed
                 let updatedChallenges = Array.append(progress.completedChallenges, [challengeId]);
-                let newSuccessRate = Rating.calculateRating(difficulty, newAttempts) + progress.successRate;
-
-                userProgress.put(user, {
+                let newScore = Rating.calculateRating(difficulty, newAttempts) + progress.score;
+                Debug.print(debug_show(newScore));
+                let updatedProgress = {
                     completedChallengeCount = progress.completedChallengeCount + 1;
-                    successRate = newSuccessRate;
+                    score = newScore;
                     registrationDate = progress.registrationDate;
                     completedChallenges = updatedChallenges;
-                });
+                };
+                userProgress.put(user, updatedProgress);
+                Debug.print(debug_show(true));
                 return true;
             };
         };
@@ -135,7 +139,7 @@ public query func completeChallenge(user: Principal, challengeId: Text, difficul
             };
             userProgress.put(user, {
                 completedChallengeCount = 1;
-                successRate = 1.0;
+                score = 1.0;
                 registrationDate = Time.now();
                 completedChallenges = [challengeId];
             });
@@ -154,7 +158,7 @@ public query func completeChallenge(user: Principal, challengeId: Text, difficul
     //                 let updatedChallenges = Array.append(progress.completedChallenges, [challengeId]);
     //                 userProgress.put(user, {
     //                     completedChallengeCount = progress.completedChallengeCount + 1; // Tamamlanan challenge sayısını artır
-    //                     successRate = Rating.calculateRating(difficulty, 1); // Burası için bir fonksiton yaz
+    //                     score = Rating.calculateRating(difficulty, 1); // Burası için bir fonksiton yaz
     //                     registrationDate = progress.registrationDate; // Kayıt tarihini koru
     //                     completedChallenges = updatedChallenges; // Güncellenmiş challenge listesini kullan
     //                 });
@@ -164,7 +168,7 @@ public query func completeChallenge(user: Principal, challengeId: Text, difficul
     //         case null {
     //             userProgress.put(user, {
     //                 completedChallengeCount = 1; // İlk challenge tamamlandı
-    //                 successRate = 1.0; // İlk challenge için başarı oranı 100%
+    //                 score = 1.0; // İlk challenge için başarı oranı 100%
     //                 registrationDate = Time.now(); // Kayıt tarihi
     //                 completedChallenges = [challengeId]; // İlk challenge'ı ekle
     //             });
