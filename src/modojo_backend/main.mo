@@ -92,7 +92,7 @@ public func logInUser(user: Principal) : async Bool {
   // --------------------------------------------------------------------
 
 
-public func completeChallenge(user: Principal, challengeId: Text, difficulty: Text, isSuccess: Bool) : async Bool {
+public query func completeChallenge(user: Principal, challengeId: Text, difficulty: Text, isSuccess: Bool) : async Bool {
     // Check if the user already has progress data
     switch (userProgress.get(user)) {
         case (?progress) {

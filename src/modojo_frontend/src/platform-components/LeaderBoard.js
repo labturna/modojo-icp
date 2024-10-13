@@ -31,6 +31,7 @@ const Leaderboard = () => {
                 });
 
                 // Fetch total users from the canister
+                console.log('modojoActor', modojoActor)
                 const users = await modojoActor.getAllUsersDetails();
                 setLeaderBoardUsers(users);
             } catch (error) {
