@@ -1,46 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Actor, HttpAgent } from '@dfinity/agent';
 import Sidebar from './Sidebar';
 import BreadcrumbCard from './Breadcrumb';
 import Footer from '../components/Footer';
-import Image from '../assets/img/user.jpg'
+import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
 const Leaderboard = () => {
-    // Örnek veri - gerçek veriyi buraya bağlayın
-    const leaderboardData = [
-        {
-            rank: 1,
-            profilePic: Image,
-            name: 'John Doe',
-            walletId: 'wallet_123',
-            completedChallenges: 10,
-            submittedApps: 5
-        },
-        {
-            rank: 2,
-            profilePic: Image,
-            name: 'Jane Smith',
-            walletId: 'wallet_456',
-            completedChallenges: 8,
-            submittedApps: 3
-        },
-        {
-            rank: 3,
-            profilePic: Image,
-            name: 'Alice Johnson',
-            walletId: 'wallet_789',
-            completedChallenges: 7,
-            submittedApps: 4
-        },
-        {
-            rank: 4,
-            profilePic: Image,
-            name: 'Jane Smith',
-            walletId: 'wallet_456',
-            completedChallenges: 8,
-            submittedApps: 3
-        },
-        // Diğer yarışmacılar
-    ];
 
+    const [leaderBoardUsers, setLeaderBoardUsers] = useState([]);
+    useEffect(() => {
+        const fetchLeaderBoardUsers = async () => {
+            try {
+                // Fetch the canister ID from the environment variables
+                const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
+
+                if (!canisterId) {
+                    throw new Error("Canister ID is not defined. Please check your environment variables.");
+                }
+                // Create a new agent
+                const agent = new HttpAgent();
+
+                // Disable certificate verification for local development
+                if (process.env.REACT_APP_ENV === 'development') {
+                    await agent.fetchRootKey();
+                }
+
+                // Create the actor for interacting with the canister
+                const modojoActor = Actor.createActor(ModojoIDL, {
+                    agent,
+                    canisterId,
+                });
+
+                // Fetch total users from the canister
+                const users = await modojoActor.getAllUsersDetails();
+                setLeaderBoardUsers(users);
+            } catch (error) {
+                console.error("Failed to fetch total users:", error);
+            }
+        };
+
+        fetchLeaderBoardUsers();
+    }, []);
     return (
         <div className="flex">
             <Sidebar />
@@ -52,28 +51,25 @@ const Leaderboard = () => {
                 <div className="mt-6 relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div className="bg-[#1e1e36] text-[#b3d4f9] p-6 rounded-lg shadow-md">
                         <div className="grid grid-cols-4 gap-4 font-bold">
-                            <div className='items-start'>Rank</div>
-                            <div className='items-start'>Wallet ID</div>
-                            <div className='items-start'>Completed Challenges</div>
-                            <div className='items-start'>Submitted dApps</div>
+                            <div>Completed Challenges Count</div>
+                            <div>Registration Date</div>
+                            <div>Completed Challenges</div>
+                            <div>Success Rate</div>
                         </div>
-                        <div className="mt-4 text-end">
-                            {leaderboardData.map((entry, index) => (
+                        <div className="mt-4">
+                            {leaderBoardUsers.map((entry, index) => (
                                 <div
-                                    key={entry.rank}
-                                    className={`grid grid-cols-5 gap-4 py-2 px-4 hover:bg-[#2e2e50] rounded-lg relative`}
+                                    key={index}
+                                    className={`grid grid-cols-4 gap-4 py-2 px-4 hover:bg-[#2e2e50] rounded-lg`}
                                 >
-                                    <div className="text-left text-lg">{entry.rank}</div>
-                                    <div className="flex items-center space-x-8"> 
-                                        <img
-                                            src={entry.profilePic}
-                                            alt={`Profile of ${entry.name}`}
-                                            className="w-14 h-14 rounded-full"
-                                        />
-                                        <span className='text-lg'>{entry.walletId}</span>
+                                    <div className="text-lg">{entry.completedChallengeCount}</div>
+                                    <div className="text-lg">
+                                        {new Date(Number(entry.registrationDate) / 1_000_000).toLocaleDateString()}
                                     </div>
-                                    <div className='text-lg'>{entry.completedChallenges}</div>
-                                    <div className='text-lg'>{entry.submittedApps}</div>
+                                    <div className="text-lg">
+                                        {entry.completedChallenges.join(', ')}
+                                    </div>
+                                    <div className="text-lg">{entry.successRate}%</div>
                                 </div>
                             ))}
                         </div>
