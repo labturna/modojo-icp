@@ -84,6 +84,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
             canisterId,
           });
 	  const principalUser = Principal.fromText(userId);
+          console.log('principalUser', principalUser)
           await modojoActor.logInUser(principalUser);
         } catch (error) {
           console.error("Failed to log in user to backend:", error);
