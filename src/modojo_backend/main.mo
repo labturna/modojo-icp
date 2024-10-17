@@ -20,6 +20,7 @@ actor ModojoProgressTracker {
   private type MonthlyUsersType = Types.MonthlyUsers;
   private type UserProgressType = Types.UserProgressType;
   private type ChallengeAttemps = Types.ChallengeAttemps;
+  private type ChallengeInfo = Types.ChallengeInfo;
 
   private let userProgress : UserType = HashMap.HashMap<Principal, UserProgressType>(10, Principal.equal, Principal.hash);
   private let challengeAttemps: ChallengeAttemps= HashMap.HashMap<Text, Nat>(10, Text.equal, Text.hash);
@@ -27,29 +28,45 @@ actor ModojoProgressTracker {
   private var weeklyUsers : WeeklyUsersType = Array.init<Nat>(7, 0); // Track users for each day of the week
   private var monthlyUsers : MonthlyUsersType = Array.init<Nat>(12, 0); // Track users for each month
 
-  // users part
-public func logInUser(user: Principal) : async Bool {
-    switch (userProgress.get(user)) {
-        case null {
-            Debug.print(debug_show(user));
-            userProgress.put(user, {
-                completedChallengeCount = 0; // Başlangıçta tamamlanan challenge sayısı
-                score = 0.0; // Başlangıçta başarı oranı
-                registrationDate = Time.now(); // Kayıt tarihi
-                completedChallenges = []; // Tamamlanan challenge'lar listesi
-                // attempts = HashMap.HashMap<Text, Nat>(10, Text.equal, Text.hash); // Boş attempts map'i
-            });
-            await incrementTotalUsers();
-            await updateWeeklyUsers();
-            await updateMonthlyUsers();
-            return true;
-        };
-        case (?progress) {
-            return false;
+    // users part
+    public func logInUser(user: Principal) : async Bool {
+        switch (userProgress.get(user)) {
+            case null {
+                Debug.print(debug_show(user));
+                userProgress.put(user, {
+                    username = "Unknown";
+                    completedChallengeCount = 0;
+                    score = 0.0;
+                    registrationDate = Time.now();
+                    completedChallenges = [];
+                });
+                await incrementTotalUsers();
+                await updateWeeklyUsers();
+                await updateMonthlyUsers();
+                return true;
+            };
+            case (?progress) {
+                return false;
+            };
         };
     };
-};
 
+    // update username
+    public func updateUsername(user: Principal, newUsername: Text) : async Bool {
+        switch (userProgress.get(user)) {
+            case (?progress) {
+                let updatedProgress = { 
+                    progress with 
+                    username = newUsername 
+                };
+                userProgress.put(user, updatedProgress);
+                return true;
+            };
+            case null {
+                return false;
+            };
+        };
+    };
 
   private func incrementTotalUsers() : async () {
     totalUsers += 1;
@@ -79,47 +96,53 @@ public func logInUser(user: Principal) : async Bool {
 
   public query func getUserDetails(user : Principal) : async ?UserProgressType {
       switch (userProgress.get(user)) {
-          case (?progress) return ?progress; // Kullanıcı bilgilerini döndür
-          case null return null; // Kullanıcı bulunamadıysa null döndür
+          case (?progress) return ?progress;
+          case null return null;
       };
   };
 
   public query func getAllUsersDetails() : async [UserProgressType] {
-      let allUserDetails = Iter.toArray(userProgress.vals()); // vals() metodunu kullanın
+      let allUserDetails = Iter.toArray(userProgress.vals());
       return allUserDetails;
   };
 
   // --------------------------------------------------------------------
 
-
-public func completeChallenge(user: Principal, challengeId: Text, difficulty: Text, isSuccess: Bool) : async Bool {
-    // Check if the user already has progress data
+public func completeChallenge(
+    user: Principal, 
+    challenge: ChallengeInfo, 
+    isSuccess: Bool
+) : async Bool {
+    Debug.print(debug_show(user));
+    Debug.print(debug_show(challenge));
+    Debug.print(debug_show(isSuccess));
     switch (userProgress.get(user)) {
         case (?progress) {
             Debug.print(debug_show(progress));
-            // Update the number of attempts
-            let attempts = challengeAttemps.get(challengeId);
+
+            // Update challenge attemps
+            let attempts = challengeAttemps.get(challenge.id);
             Debug.print(debug_show(attempts));
             let newAttempts = switch (attempts) {
                 case (null) 1;
                 case (?count) count + 1;
             };
-            challengeAttemps.put(challengeId, newAttempts);
+            challengeAttemps.put(challenge.id, newAttempts);
 
             if (isSuccess == false) {
-                challengeAttemps.put(challengeId, newAttempts);
                 return false;
             };
 
-            // If the challenge is already completed, do nothing
-            if (Array.indexOf(challengeId, progress.completedChallenges, Text.equal) != null) {
+            // If challange has been completed.
+            if (Array.indexOf(challenge.name, progress.completedChallenges, Text.equal) != null) {
                 return false;
             } else {
-                // if successfully completed
-                let updatedChallenges = Array.append(progress.completedChallenges, [challengeId]);
-                let newScore = Rating.calculateRating(difficulty, newAttempts) + progress.score;
+                let updatedChallenges = Array.append(progress.completedChallenges, [challenge.name]);
+                let newScore = Rating.calculateRating(challenge.difficulty, newAttempts) + progress.score;
                 Debug.print(debug_show(newScore));
+
                 let updatedProgress = {
+                    username = progress.username;
                     completedChallengeCount = progress.completedChallengeCount + 1;
                     score = newScore;
                     registrationDate = progress.registrationDate;
@@ -132,16 +155,18 @@ public func completeChallenge(user: Principal, challengeId: Text, difficulty: Te
         };
         case null {
             let attemptsMap = HashMap.HashMap<Text, Nat>(10, Text.equal, Text.hash);
-            attemptsMap.put(challengeId, 1);
+            attemptsMap.put(challenge.id, 1);
 
             if (isSuccess == false) {
                 return false;
             };
+
             userProgress.put(user, {
+                username = "Unknown";
                 completedChallengeCount = 1;
                 score = 1.0;
                 registrationDate = Time.now();
-                completedChallenges = [challengeId];
+                completedChallenges = [challenge.name];
             });
             return true;
         };
