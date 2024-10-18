@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faRunning, faPuzzlePiece, faBars, faChartLine, faRankingStar } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/img/modojo.png';
+import logo from '../assets/img/modojo-logo.png';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);

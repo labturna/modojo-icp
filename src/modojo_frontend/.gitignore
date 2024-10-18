@@ -1,0 +1,43 @@
+# React and Node.js related
+node_modules/
+build/
+dist/
+.cache/
+*.log
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+/.dfx/
+# Miscellaneous
+.idea/
+/.vscode/
+/coverage/
+/.DS_Store
+/*.pem
+
+# macOS
+*.DS_Store
+*.AppleDouble
+*.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE/Editor related
+*.sublime-workspace
+*.sublime-project
+*.vscode/
+
+# Temporary files
+*.tmp
+*.swp
+

@@ -7,13 +7,13 @@ const Header = () => {
   const { isAuthenticated, handleLogin, handleLogout } = useAuth(); // useAuth'tan değerleri al
 
   return (
-    <header className="bg-[#1e1e36] text-white py-2 px-4">
+    <header className="bg-transparent text-white py-2 px-4">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-2xl font-bold">
           <img 
             src="/img/modojo-logo.png" 
             alt="MoDojo Logo" 
-            className="h-14 w-50"  /* Adjust the height as needed */
+            className="h-20 w-50"  /* Adjust the height as needed */
           />
         </h1>
         <nav className="flex items-center space-x-4">
