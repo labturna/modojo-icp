@@ -1,14 +1,20 @@
 export const idlFactory = ({ IDL }) => {
+  const ChallengeInfo = IDL.Record({
+    'id' : IDL.Text,
+    'difficulty' : IDL.Text,
+    'name' : IDL.Text,
+  });
   const Time = IDL.Int;
   const UserProgressType = IDL.Record({
     'completedChallengeCount' : IDL.Nat,
+    'username' : IDL.Text,
     'completedChallenges' : IDL.Vec(IDL.Text),
     'score' : IDL.Float64,
     'registrationDate' : Time,
   });
   return IDL.Service({
     'completeChallenge' : IDL.Func(
-        [IDL.Principal, IDL.Text, IDL.Text, IDL.Bool],
+        [IDL.Principal, ChallengeInfo, IDL.Bool],
         [IDL.Bool],
         [],
       ),
@@ -23,6 +29,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'getWeeklyUsers' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
     'logInUser' : IDL.Func([IDL.Principal], [IDL.Bool], []),
+    'updateUsername' : IDL.Func([IDL.Principal, IDL.Text], [IDL.Bool], []),
   });
 };
 export const init = ({ IDL }) => { return []; };

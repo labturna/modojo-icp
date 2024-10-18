@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Principal } from "@dfinity/principal";
 import Split from 'react-split';
 import MonacoEditor from 'react-monaco-editor';
 import '../assets/css/Editor.css';
@@ -8,7 +9,12 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import '../assets/css/markdown.css';
 import mo from 'motoko/interpreter';
+import { useAuth } from '../context/AuthContext';
+import  { HttpAgent, Actor} from '@dfinity/agent';
+import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
+const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
 const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, pageType }) => {
+    const { handleLogout, userId } = useAuth();
     const [jsonPath, setJsonPath] = useState('');
     const [selectedLesson, setSelectedLesson] = useState(initialSelectedLesson);
     const [lessonContent, setLessonContent] = useState('');
@@ -113,11 +119,11 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             await mo.clearPackages();
             await mo.installPackages({ base: 'dfinity/motoko-base/master/src' });
             let results = [];
-    
+
             // Iterate over each test case, append it, and run
             for (const test of tests) {
                 const { description, input, expected, functionName } = test;
-                
+
                 // Extract input parameters and assign them to variables
                 let inputDeclarations = '';
                 let inputArgs = '';
@@ -130,7 +136,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                     inputDeclarations = `let input = ${JSON.stringify(input)};`;
                     inputArgs = 'input';
                 }
-    
+
                 // Append test code to the user function code
                 const appendedCode = `import Debug "mo:base/Debug";
     ${userCode}
@@ -141,7 +147,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 // console.log(appendedCode);
                 mo.write('Main.mo', appendedCode);
                 const result = await mo.run('Main.mo');
-    
+
                 try {
                     if (result.stdout) {
                         // Extract relevant output
@@ -165,30 +171,48 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                     results.push({ description, success: false, error: error.message, input, expected });
                 }
             }
-    
+
             return results;
         } catch (error) {
             return { error: 'Code compilation failed: ' + error.message };
         }
     }
-    
+
     const handleRun = async () => {
+        console.log('canisterId', canisterId)
         try {
             await mo.clearPackages();
             await mo.installPackages({ base: 'dfinity/motoko-base/master/src' });
             const codeToRun = code;
+            let isSolutionResultError = false
             mo.write('Main.mo', codeToRun);
-    
+            const principalUser = Principal.fromText(userId);
+
+            let challengePayload = {
+                user: principalUser,
+                challenge: {
+                    id: null,
+                    name: null,
+                    difficulty: 'easy',
+                },
+                isSuccess: false
+            }
+
             // Load test cases from the JSON endpoint
             const response = await fetch('/challenges/testCases.json');
             if (!response.ok) {
                 throw new Error('Failed to load test cases');
             }
             const testCases = await response.json();
-    
+
             // Run tests for each lesson in the testCases file
             for (const lesson of testCases.lessons) {
                 if (selectedLesson === lesson.slug) {
+                    challengePayload.challenge = {
+                        id: lesson.slug,
+                        name: lesson.name,
+                        difficulty: lesson.difficulty
+                    }
                     const results = await runTests(codeToRun, lesson.tests.map(test => ({
                         description: test.description,
                         functionName: test.functionName,
@@ -204,9 +228,14 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                         if (result.success) {
                             outputHTML += `<pre style="color: green;">Test Passed: ${result.description} - Expected: ${JSON.stringify(result.expected)}</pre>`;
                         } else {
+                            isSolutionResultError = true
                             outputHTML += `<pre style="color: red;">Test Failed: ${result.description} - Input: ${JSON.stringify(result.input)} - Output: ${JSON.stringify(result.output)} - Expected: ${JSON.stringify(result.expected)}</pre>`;
                         }
                     });
+
+                    challengePayload.isSuccess = !isSolutionResultError
+                    await runChallangeSolution(challengePayload)
+
                     document.querySelector('.output').innerHTML = outputHTML;
                 }
             }
@@ -220,6 +249,26 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
     const handleClear = () => {
         setCode('');
     };
+
+    const runChallangeSolution = async (payload) => {
+        try {
+            const agent = new HttpAgent();
+            if (process.env.REACT_APP_ENV === 'development') {
+                await agent.fetchRootKey().catch(err => {
+                    console.log(err)
+                });
+            }
+            const modojoActor = Actor.createActor(ModojoIDL, {
+                agent,
+                canisterId,
+            });
+            console.log('challenge modojoActor', modojoActor)
+            console.log('run challenge solution', payload)
+            await modojoActor.completeChallenge(payload?.user, payload?.challenge, payload?.isSuccess);
+        } catch (error) {
+            console.error("Failed to complete challenge:", error);
+        }
+    }
 
     const findLessonIndex = (lessons, slug) => {
         for (let section of lessons) {

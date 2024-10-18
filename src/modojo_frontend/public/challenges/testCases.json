@@ -3,6 +3,7 @@
       {
         "slug": "twoSum",
         "name": "Two Sum",
+        "difficulty": "easy",
         "tests": [
           {
             "functionName": "twoSum",
@@ -36,6 +37,7 @@
       {
         "slug": "isPalindrome",
         "name": "Palindrome Numbers",
+        "difficulty": "easy",
         "tests": [
           {
             "functionName": "isPalindrome",

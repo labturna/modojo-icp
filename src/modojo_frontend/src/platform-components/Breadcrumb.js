@@ -83,6 +83,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
             agent,
             canisterId,
           });
+          console.log('login modojo actor', modojoActor)
 	  const principalUser = Principal.fromText(userId);
           console.log('principalUser', principalUser)
           await modojoActor.logInUser(principalUser);

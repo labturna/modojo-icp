@@ -16,6 +16,7 @@
         {
           "name": "Two Sum",
           "slug": "twoSum",
+          "difficulty": "easy",
           "content": "easy-challenges/two-sum/lesson.md",
           "files": ["easy-challenges/two-sum/main.mo"],
           "solution": "easy-challenges/two-sum/solution.md"
@@ -23,6 +24,7 @@
         {
           "name": "Palindrome Numbers",
           "slug": "isPalindrome",
+          "difficulty": "easy",
           "content": "easy-challenges/palindrome-numbers/lesson.md",
           "files": ["easy-challenges/palindrome-numbers/main.mo"],
           "solution": "easy-challenges/palindrome-numbers/solution.md"

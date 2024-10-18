@@ -4,10 +4,17 @@ type UserProgressType =
    completedChallenges: vec text;
    registrationDate: Time;
    score: float64;
+   username: text;
  };
 type Time = int;
+type ChallengeInfo = 
+ record {
+   difficulty: text;
+   id: text;
+   name: text;
+ };
 service : {
-  completeChallenge: (principal, text, text, bool) -> (bool);
+  completeChallenge: (principal, ChallengeInfo, bool) -> (bool);
   debugAllProgress: () -> ();
   getAllUsersDetails: () -> (vec UserProgressType) query;
   getMonthlyUsers: () -> (vec nat) query;
@@ -15,4 +22,5 @@ service : {
   getUserDetails: (principal) -> (opt UserProgressType) query;
   getWeeklyUsers: () -> (vec nat) query;
   logInUser: (principal) -> (bool);
+  updateUsername: (principal, text) -> (bool);
 }

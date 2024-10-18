@@ -8,9 +8,9 @@ module {
     };
 
     public let difficultyPoints: DifficultyPoints = {
-        easy = 3;      // Easy challenge için 3 puan
-        medium = 7;    // Medium challenge için 7 puan
-        hard = 11;     // Hard challenge için 11 puan
+        easy = 3;      // 3 points
+        medium = 7;    // 7 points
+        hard = 11;     // 11 points
     };
 
     
@@ -19,12 +19,14 @@ public func calculateRating(difficulty: Text, attempts: Nat): Float {
         case "easy" { difficultyPoints.easy };
         case "medium" { difficultyPoints.medium };
         case "hard" { difficultyPoints.hard };
-        case _ { 0 }; // Geçersiz zorluk seviyesi için 0 puan
+        case _ { 0 }; 
     };
     
     
     let rawRating = Float.fromInt(points) / Float.fromInt(attempts);
-    return Float.floor(rawRating);
+    let finalRating = if (rawRating < 1.0) 1.0 else rawRating;
+
+    return Float.floor(finalRating);
 
 };
 };
