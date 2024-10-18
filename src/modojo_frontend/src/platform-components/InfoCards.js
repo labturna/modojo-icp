@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBook, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBook, faTasks, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons';
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
+import { useAuth } from '../context/AuthContext';
+import { Principal } from "@dfinity/principal";
 
 const InfoCard = ({ title, icon, bgColor, children }) => (
   <div className={`p-4 mt-5 w-full rounded-lg shadow-md text-white ${bgColor}`}>
@@ -20,31 +22,24 @@ const InfoCard = ({ title, icon, bgColor, children }) => (
 
 const DashboardInfoCards = () => {
   const [totalUsers, setTotalUsers] = useState(0);
-    useEffect(() => {
+  const { userId } = useAuth();
+  const [userCompletedChallenges, setUserCompletedChallenges] = useState(0);
+  const [userScore, setUserScore] = useState(0);
+  useEffect(() => {
     const fetchTotalUsers = async () => {
       try {
-        // Fetch the canister ID from the environment variables
         const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
-
         if (!canisterId) {
           throw new Error("Canister ID is not defined. Please check your environment variables.");
         }
-
-        // Create a new agent
         const agent = new HttpAgent();
-
-        // Disable certificate verification for local development
         if (process.env.REACT_APP_ENV === 'development') {
           await agent.fetchRootKey();
         }
-
-        // Create the actor for interacting with the canister
         const modojoActor = Actor.createActor(ModojoIDL, {
           agent,
           canisterId,
         });
-
-        // Fetch total users from the canister
         const users = await modojoActor.getTotalUsers();
         setTotalUsers(Number(users));
       } catch (error) {
@@ -53,11 +48,39 @@ const DashboardInfoCards = () => {
     };
 
     fetchTotalUsers();
-  }, []);  
+  }, []);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
+        if (!canisterId) {
+          throw new Error("Canister ID is not defined. Please check your environment variables.");
+        }
+        const agent = new HttpAgent();
+        if (process.env.REACT_APP_ENV === 'development') {
+          await agent.fetchRootKey();
+        }
+        const modojoActor = Actor.createActor(ModojoIDL, {
+          agent,
+          canisterId,
+        });
+        const principalUser = Principal.fromText(userId);
+        const userDetails = await modojoActor.getUserDetails(principalUser);
+        // const completedChallenge = userDetails[0].completedChallengeCount
+        // const userScore = userDetails[0].score
+        setUserCompletedChallenges(Number(userDetails[0].completedChallengeCount.toString()));
+        setUserScore(userDetails[0].score);
+      } catch (error) {
+        console.error("Failed to fetch user's details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Total Users */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <InfoCard
         title="Total Users"
         icon={faUser}
@@ -66,16 +89,25 @@ const DashboardInfoCards = () => {
         <p className="text-3xl font-bold">{totalUsers}</p>
       </InfoCard>
 
-      {/* Total Lessons */}
       <InfoCard
-        title="Total Lessons" 
+        title="Total Lessons"
         icon={faBook}
         bgColor="bg-gradient-to-r from-teal-800 via-teal-500 to-teal-100"
       >
         <p className="text-3xl font-bold">120</p>
       </InfoCard>
-
-      {/* Challenges by Difficulty */}
+      <InfoCard
+        title="Completed Challenges"
+        icon={faFireFlameCurved}
+        bgColor="bg-gradient-to-r from-orange-800 via-orange-500 to-orange-100"
+      >
+        <div className="flex justify-between items-center w-full">
+          <p className="text-2xl font-bold">{userCompletedChallenges}</p>
+          <p className="text-2xl font-bold inline-block bg-blue-600 text-white px-4 py-2 rounded-full shadow-md">
+            Score : {userScore}
+          </p>
+        </div>
+      </InfoCard>
       <InfoCard
         title="Challenges by Difficulty"
         icon={faTasks}

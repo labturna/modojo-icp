@@ -1,6 +1,4 @@
 ```motoko
-import Debug "mo:base/Debug";
-
 func isPalindrome(x: Int): Bool {
     if (x < 0) {
         return false;
@@ -17,11 +15,5 @@ func isPalindrome(x: Int): Bool {
 
     return x == reversed;
 };
-
-let number: Int = 1221;
-let result: Bool = isPalindrome(number);
-
-// Print the output
-Debug.print(debug_show(result));
 
 ```

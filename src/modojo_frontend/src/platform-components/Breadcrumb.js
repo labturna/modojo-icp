@@ -3,72 +3,21 @@ import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import '../assets/css/Breadcrumb.css';
-import  { HttpAgent, Actor} from '@dfinity/agent';
+import { HttpAgent, Actor } from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
 import { Principal } from "@dfinity/principal";
 
-const RadialProgressBar = ({ percentage }) => {
-  const radius = 20; // Adjust radius to fit within the SVG
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
-
-  // Function to dynamically determine color based on percentage
-  const getColor = (percentage) => {
-    if (percentage < 30) return '#ff4b5c'; // Red for low percentage
-    if (percentage < 60) return '#f7b801'; // Yellow for medium percentage
-    return '#4caf50'; // Green for high percentage
-  };
-
-  return (
-    <svg
-      width="47"  // Set the width to 45px
-      height="47" // Set the height to 45px
-      viewBox="0 0 45 45" // Ensure the viewBox matches the size of the SVG
-      style={{ transform: 'rotate(-90deg)' }} // Rotate to start progress from the top
-    >
-      <circle
-        cx="22.5" // Center the circle in the middle of the SVG (half of width/height)
-        cy="22.5" // Center the circle in the middle of the SVG
-        r={radius} // Set the radius
-        fill="none"
-        stroke="#ddd"
-        strokeWidth="4" // Set stroke width
-      />
-      <circle
-        cx="22.5" // Center the circle in the middle of the SVG
-        cy="22.5" // Center the circle in the middle of the SVG
-        r={radius} // Set the radius
-        fill="none"
-        stroke={getColor(percentage)}
-        strokeWidth="4"
-        strokeDasharray={circumference}
-        strokeDashoffset={strokeDashoffset}
-        strokeLinecap="round"
-        style={{
-          transition: 'stroke-dashoffset 0.35s',
-        }}
-      />
-      <text
-        x="22.5"
-        y="22.5"
-        textAnchor="middle"
-        dy="0.3em"
-        fontSize="16px" // Adjust font size for smaller SVG
-        fill="#fff"
-      >
-        {percentage}%
-      </text>
-    </svg>
-  );
-};
 const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
 
 const BreadcrumbCard = ({ items, page, onSelect }) => {
   const { handleLogout, userId } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Select');
+  const [userDetails, setUserDetails] = useState("Unknown");
+  const [isUsernamePopupOpen, setIsUsernamePopupOpen] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
   const dropdownRef = useRef(null);
-  const [progress, setProgress] = useState(10);
+
   useEffect(() => {
     const logInUserToBackend = async () => {
       if (userId && canisterId) {
@@ -83,9 +32,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
             agent,
             canisterId,
           });
-          console.log('login modojo actor', modojoActor)
-	  const principalUser = Principal.fromText(userId);
-          console.log('principalUser', principalUser)
+          const principalUser = Principal.fromText(userId);
           await modojoActor.logInUser(principalUser);
         } catch (error) {
           console.error("Failed to log in user to backend:", error);
@@ -97,19 +44,64 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
 
     logInUserToBackend();
   }, [userId]);
-  const getShortenedUserId = (userId) => {
-    if (userId && userId.length > 6) {
-      return `${userId.slice(0, 3)}...${userId.slice(-3)}`;
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
+        if (!canisterId) {
+          throw new Error("Canister ID is not defined. Please check your environment variables.");
+        }
+        const agent = new HttpAgent();
+        if (process.env.REACT_APP_ENV === 'development') {
+          await agent.fetchRootKey();
+        }
+        const modojoActor = Actor.createActor(ModojoIDL, {
+          agent,
+          canisterId,
+        });
+        const principalUser = Principal.fromText(userId);
+        const userDetailsResponse = await modojoActor.getUserDetails(principalUser);
+        const userName = userDetailsResponse[0].username;
+        setUserDetails(userName);
+
+        if (userName === "Unknown") {
+          setIsUsernamePopupOpen(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user's details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userId]);
+
+  const handleUsernameSubmit = async () => {
+    try {
+      const agent = new HttpAgent();
+      if (process.env.REACT_APP_ENV === 'development') {
+        await agent.fetchRootKey();
+      }
+      const modojoActor = Actor.createActor(ModojoIDL, {
+        agent,
+        canisterId,
+      });
+      const principalUser = Principal.fromText(userId);
+      await modojoActor.updateUsername(principalUser, newUsername); // `updateUsername` adlı bir backend fonksiyonu oluşturmanız gerekecek
+      setUserDetails(newUsername);
+      setIsUsernamePopupOpen(false);
+    } catch (error) {
+      console.error("Failed to update username:", error);
     }
-    return userId;  // Eğer ID 6 karakterden kısaysa, doğrudan döndür
   };
+
   const createSlug = (fileName) => {
     return fileName
-      .replace('.md', '')                            // .md uzantısını kaldır
-      .replace(/([a-z])([A-Z])/g, '$1 $2')          // Küçük harf ve büyük harf arasına boşluk ekle
-      .replace(/[^a-zA-Z0-9 ]+/g, ' ')              // Boşlukları ve özel karakterleri boşluk ile değiştir
-      .replace(/\s+/g, ' ')                         // Birden fazla boşluğu tek bir boşluk ile değiştir
-      .trim();                                      // Başta ve sondaki boşlukları temizle
+      .replace('.md', '')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[^a-zA-Z0-9 ]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   };
 
   const formatSlug = (slug) => {
@@ -201,69 +193,88 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
   };
 
   return (
-    <div className="bg-[#1e1e36] rounded-lg mt-3 p-4 flex justify-between items-center shadow-md">
-      {/* Breadcrumb Section */}
-      {(page === 'dashboard' || page === 'overview' || page === 'practice' || page === 'challenges' || page === 'leaderboard') && (
-        <nav className="flex justify-between items-center w-full">
-          <div className="flex items-center">
-            {items.map((item, index) => (
-              <span key={index} className="flex items-center">
-                <a href={item.href} className="text-[#b3d4f9] hover:text-[#ffffff]">
-                  {item.label}
-                </a>
-                {index < items.length - 1 && <span className="mx-2 text-[#b3d4f9]">/</span>}
-              </span>
-            ))}
-          </div>
-
-          {page === 'overview' && (
-            <div className="flex">
-              <div ref={dropdownRef} className="relative text-lg text-left">
-                <button className="text-[#b3d4f9] hover:text-[#ffffff] focus:outline-none" onClick={toggleMenu}>
-                  <span className="mr-3">{selectedItem}</span>
-                  <FontAwesomeIcon icon={faCircleChevronDown} size="lg" />
-                </button>
-
-                {/* Dropdown menu */}
-                {isOpen && (
-                  <div className="relative">
-                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-80 w-96 overflow-y-auto custom-scrollbar">
-                      <ul className="py-1 text-gray-700">
-                        {filesWithSlugs.map((file) => (
-                          <li key={file.slug}>
-                            <button
-                              onClick={() => handleSelect(file.slug)}
-                              className="block px-4 py-2 text-left w-full hover:bg-gray-100 capitalize"
-                            >
-                              {formatSlug(file.slug)}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </div>
+    <>
+      <div className="bg-[#1e1e36] rounded-lg mt-3 p-4 flex justify-between items-center shadow-md">
+        {/* Breadcrumb Section */}
+        {(page === 'dashboard' || page === 'overview' || page === 'practice' || page === 'challenges' || page === 'leaderboard') && (
+          <nav className="flex justify-between items-center w-full">
+            <div className="flex items-center">
+              {items.map((item, index) => (
+                <span key={index} className="flex items-center">
+                  <a href={item.href} className="text-[#b3d4f9] hover:text-[#ffffff]">
+                    {item.label}
+                  </a>
+                  {index < items.length - 1 && <span className="mx-2 text-[#b3d4f9]">/</span>}
+                </span>
+              ))}
             </div>
-          )}
 
-          <div className="flex space-x-2">
-            {(page === 'practice' || page === 'challenges') && (
-              <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
-                <RadialProgressBar percentage={progress} />
-              </li>
+            {page === 'overview' && (
+              <div className="flex">
+                <div ref={dropdownRef} className="relative text-lg text-left">
+                  <button className="text-[#b3d4f9] hover:text-[#ffffff] focus:outline-none" onClick={toggleMenu}>
+                    <span className="mr-3">{selectedItem}</span>
+                    <FontAwesomeIcon icon={faCircleChevronDown} size="lg" />
+                  </button>
+
+                  {/* Dropdown menu */}
+                  {isOpen && (
+                    <div className="relative">
+                      <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-80 w-96 overflow-y-auto custom-scrollbar">
+                        <ul className="py-1 text-gray-700">
+                          {filesWithSlugs.map((file) => (
+                            <li key={file.slug}>
+                              <button
+                                onClick={() => handleSelect(file.slug)}
+                                className="block px-4 py-2 text-left w-full hover:bg-gray-100 capitalize"
+                              >
+                                {formatSlug(file.slug)}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             )}
-            <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
-              {userId && <span className="text-[#b3d4f9] mr-2">{getShortenedUserId(userId)}</span>} 
-              <FontAwesomeIcon icon={faUser} size="lg" className="mr-2" />
-            </li>
-            <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
-              <FontAwesomeIcon icon={faSignOutAlt} size="lg" className="mr-2" onClick={handleLogout} />
-            </li>
+
+            <div className="flex space-x-2">
+              <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+                {userId && <span className="text-[#b3d4f9] mr-2">{userDetails}</span>} 
+                <FontAwesomeIcon icon={faUser} size="lg" className="mr-2" />
+              </li>
+              <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+                <FontAwesomeIcon icon={faSignOutAlt} size="lg" className="mr-2" onClick={handleLogout} />
+              </li>
+            </div>
+          </nav>
+        )}
+      </div>
+
+      {/* Pop-up for Username */}
+      {isUsernamePopupOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-[#2e2e50] p-6 rounded-lg shadow-lg">
+            <h2 className="text-white text-2xl font-bold mb-4">Enter Your Username</h2>
+            <input
+              type="text"
+              className="border border-gray-300 p-2 mb-4 w-full rounded-md"
+              placeholder="Enter new username"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
+            <button
+              className="bg-[#2e2e50] text-white px-4 py-2 rounded-md border border-[#b3d4f9] hover:bg-[#2e2e50] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md"
+              onClick={handleUsernameSubmit}
+            >
+              Save
+            </button>
           </div>
-        </nav>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

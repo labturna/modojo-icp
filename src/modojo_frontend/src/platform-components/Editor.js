@@ -4,26 +4,29 @@ import Split from 'react-split';
 import MonacoEditor from 'react-monaco-editor';
 import '../assets/css/Editor.css';
 import { configureMonaco } from "./configureMonaco";
-import { FaPlay, FaTrashAlt, FaArrowLeft, FaArrowRight, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaPlay, FaTrashAlt, FaArrowLeft, FaArrowRight, FaEye, FaEyeSlash, FaCheckCircle } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import '../assets/css/markdown.css';
 import mo from 'motoko/interpreter';
 import { useAuth } from '../context/AuthContext';
-import  { HttpAgent, Actor} from '@dfinity/agent';
+import { HttpAgent, Actor } from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
+
+
 const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
 const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, pageType }) => {
-    const { handleLogout, userId } = useAuth();
+    const { userId } = useAuth();
     const [jsonPath, setJsonPath] = useState('');
     const [selectedLesson, setSelectedLesson] = useState(initialSelectedLesson);
     const [lessonContent, setLessonContent] = useState('');
     const [solutionContent, setSolutionContent] = useState('');
     const [lessonPath, setLessonPath] = useState('');
     const [courseData, setCourseData] = useState([]);
-    const [code, setCode] = useState('// Motoko kodu buraya gelecek...');
+    const [code, setCode] = useState('// Write motoko');
     const [activeTab, setActiveTab] = useState('main.mo');
     const [showSolution, setShowSolution] = useState(false);
+    const [completedChallenges, setCompletedChallenges] = useState([]);
 
     useEffect(() => {
         window.MonacoEnvironment = {
@@ -32,6 +35,28 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
             }
         };
     }, []);
+
+    useEffect(() => {
+        const fetchCompletedChallenges = async () => {
+            try {
+                const agent = new HttpAgent();
+                if (process.env.REACT_APP_ENV === 'development') {
+                    await agent.fetchRootKey();
+                }
+                const modojoActor = Actor.createActor(ModojoIDL, {
+                    agent,
+                    canisterId,
+                });
+                const principalUser = Principal.fromText(userId);
+                const userDetails = await modojoActor.getUserDetails(principalUser);
+                console.log(userDetails[0].completedChallenges);
+                setCompletedChallenges(userDetails[0].completedChallenges || []);
+            } catch (error) {
+                console.error("Failed to fetch completed challenges:", error);
+            }
+        };
+        fetchCompletedChallenges();
+    }, [userId]);
 
     useEffect(() => {
         if (pageType === 'practice') {
@@ -356,7 +381,10 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
         selectOnLineNumbers: true,
         automaticLayout: true,
     };
+    const normalizedSelectedLesson = selectedLesson ? selectedLesson.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase() : '';
+    const isChallengeCompleted = completedChallenges.some(challenge => challenge.toLowerCase() === normalizedSelectedLesson);
 
+    console.log(isChallengeCompleted);
     return (
         <div className="split-container rounded-md mt-2">
             <Split
@@ -424,6 +452,11 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                             </div>
 
                             <div className="controls flex space-x-4 mr-2">
+                                {isChallengeCompleted && (
+                                    <button className="p-2 rounded-full bg-[#fcd34d] hover:bg-[#f59e0b]">
+                                        <FaCheckCircle /> 
+                                    </button>
+                                )}
                                 <button onClick={handleRun} className="p-2 rounded-full bg-[#15803d] hover:bg-[#22c55e]">
                                     <FaPlay />
                                 </button>

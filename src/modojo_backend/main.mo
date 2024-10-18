@@ -6,12 +6,9 @@ import Text "mo:base/Text";
 import Iter "mo:base/Iter";
 import Time "mo:base/Time";
 import Nat "mo:base/Nat";
-import Float "mo:base/Float";
-// import Int "mo:base/Int";
-
-
+//import Float "mo:base/Float";
+import Int "mo:base/Int";
 import Types "src/Types";
-import Func "src/Func";
 import Rating "src/Rating";
 
 actor ModojoProgressTracker {
@@ -45,7 +42,7 @@ actor ModojoProgressTracker {
                 await updateMonthlyUsers();
                 return true;
             };
-            case (?progress) {
+            case (?_) {
                 return false;
             };
         };
@@ -71,17 +68,32 @@ actor ModojoProgressTracker {
   private func incrementTotalUsers() : async () {
     totalUsers += 1;
   };
-
+  private func getCurrentDay(): Nat {
+    let timeInSeconds = Time.now() / 1_000_000_000; 
+    let daysSinceEpoch = timeInSeconds / 86400; 
+    let currentDay = (daysSinceEpoch + 3) % 7; 
+    return Int.abs(currentDay); 
+  };
+  
+  private func getCurrentMonth(): Nat {
+    let time = Time.now();
+    let month = (time % 31_536_000_000_000_000) / 2_592_000_000_000_000;
+    return Int.abs(month) - 1; 
+  };
   private func updateWeeklyUsers() : async () {
-      let currentDay = Func.getCurrentDay();
+      let currentDay = getCurrentDay();
       weeklyUsers[currentDay] := weeklyUsers[currentDay] + 1;
   };
 
   private func updateMonthlyUsers() : async () {
-      let currentMonth = Func.getCurrentMonth();
+      let currentMonth = getCurrentMonth();
       monthlyUsers[currentMonth] := monthlyUsers[currentMonth] + 1;
   };
-
+ public query func getCurrentDateInfo(): async Text {
+    let currentDay = getCurrentDay();
+    let currentMonth = getCurrentMonth();
+    return "Today is day " # Nat.toText(currentDay) # " of the week and month " # Nat.toText(currentMonth) # ".";
+  };
   public query func getTotalUsers() : async Nat {
     return totalUsers;
   };
