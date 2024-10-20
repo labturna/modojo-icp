@@ -10,7 +10,7 @@ Function Signature:
 
 ```motoko
 public func isPalindrome(x: Int) : Bool;
-```
+``` 
 
 ```plaintext
 Input:
@@ -23,6 +23,7 @@ Constraints:
 
 -2^31 <= x <= 2^31 - 1
 ```
+
 
 ## Examples:
 

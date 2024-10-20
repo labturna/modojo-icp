@@ -20,6 +20,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'debugAllProgress' : IDL.Func([], [], []),
     'getAllUsersDetails' : IDL.Func([], [IDL.Vec(UserProgressType)], ['query']),
+    'getCurrentDateInfo' : IDL.Func([], [IDL.Text], ['query']),
     'getMonthlyUsers' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
     'getTotalUsers' : IDL.Func([], [IDL.Nat], ['query']),
     'getUserDetails' : IDL.Func(

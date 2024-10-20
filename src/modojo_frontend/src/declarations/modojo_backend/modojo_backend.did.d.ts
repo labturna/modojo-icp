@@ -22,6 +22,7 @@ export interface _SERVICE {
   >,
   'debugAllProgress' : ActorMethod<[], undefined>,
   'getAllUsersDetails' : ActorMethod<[], Array<UserProgressType>>,
+  'getCurrentDateInfo' : ActorMethod<[], string>,
   'getMonthlyUsers' : ActorMethod<[], Array<bigint>>,
   'getTotalUsers' : ActorMethod<[], bigint>,
   'getUserDetails' : ActorMethod<[Principal], [] | [UserProgressType]>,

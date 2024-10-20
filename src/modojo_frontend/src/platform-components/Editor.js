@@ -172,7 +172,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 // console.log(appendedCode);
                 mo.write('Main.mo', appendedCode);
                 const result = await mo.run('Main.mo');
-
+console.log(result)
                 try {
                     if (result.stdout) {
                         // Extract relevant output
@@ -183,6 +183,9 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                         } catch (e) {
                             parsedOutput = cleanOutput === 'true' ? true : cleanOutput === 'false' ? false : cleanOutput;
                         }
+                        console.log(parsedOutput, expected);
+                        console.log(JSON.stringify(parsedOutput), JSON.stringify(expected));
+                        console.log(parsedOutput === expected);
                         const success = JSON.stringify(parsedOutput) === JSON.stringify(expected);
                         if (success) {
                             results.push({ description, success, output: parsedOutput, expected });

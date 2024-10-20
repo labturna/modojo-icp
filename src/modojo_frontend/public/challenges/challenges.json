@@ -1,35 +1,69 @@
 {
-  "topic": "motoko",
-  "slug": "motoko-tutorial",
-  "name": "Motoko Tutorial",
-  "description": "Motoko is the language of choice for writing smart contracts for the Internet Computer. This comprehensive tutorial covers most of the language you will need to write your appications.",
-  "type": "tutorial",
-  "plugin": "@modojo/motoko-editor",
-  "config": {
-    "output": true
-  },
-  "lessons": [
-    {
-      "name": "Easy Challenges",
-      "slug": "easy-challenges",
-      "children": [
-        {
-          "name": "Two Sum",
-          "slug": "twoSum",
-          "difficulty": "easy",
-          "content": "easy-challenges/two-sum/lesson.md",
-          "files": ["easy-challenges/two-sum/main.mo"],
-          "solution": "easy-challenges/two-sum/solution.md"
+    "topic": "motoko",
+    "slug": "motoko-tutorial",
+    "name": "Motoko Tutorial",
+    "description": "Motoko is the language of choice for writing smart contracts for the Internet Computer. This comprehensive tutorial covers most of the language you will need to write your appications.",
+    "type": "tutorial",
+    "plugin": "@modojo/motoko-editor",
+    "config": {
+        "output": true
+    },
+    "lessons": [{
+            "name": "Easy Challenges",
+            "slug": "easy-challenges",
+            "children": [{
+                    "name": "Two Sum",
+                    "slug": "twoSum",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/two-sum/lesson.md",
+                    "files": ["easy-challenges/two-sum/main.mo"],
+                    "solution": "easy-challenges/two-sum/solution.md"
+                },
+                {
+                    "name": "Palindrome Numbers",
+                    "slug": "isPalindrome",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/palindrome-numbers/lesson.md",
+                    "files": ["easy-challenges/palindrome-numbers/main.mo"],
+                    "solution": "easy-challenges/palindrome-numbers/solution.md"
+                },
+                {
+                    "name": "Majority Element",
+                    "slug": "majorityElement",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/majority-element/lesson.md",
+                    "files": ["easy-challenges/majority-element/main.mo"],
+                    "solution": "easy-challenges/majority-element/solution.md"
+                }, {
+                    "name": "Single Number",
+                    "slug": "singleNumber",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/single-number/lesson.md",
+                    "files": ["easy-challenges/single-number/main.mo"],
+                    "solution": "easy-challenges/single-number/solution.md"
+                }
+            ]
         },
         {
-          "name": "Palindrome Numbers",
-          "slug": "isPalindrome",
-          "difficulty": "easy",
-          "content": "easy-challenges/palindrome-numbers/lesson.md",
-          "files": ["easy-challenges/palindrome-numbers/main.mo"],
-          "solution": "easy-challenges/palindrome-numbers/solution.md"
+            "name": "Hart Challenges",
+            "slug": "hard-challenges",
+            "children": [{
+                    "name": "shortestPalindrome",
+                    "slug": "shortestPalindrome",
+                    "difficulty": "hard",
+                    "content": "hard-challenges/shortest-palindrome/lesson.md",
+                    "files": ["hard-challenges/shortest-palindrome/main.mo"],
+                    "solution": "hard-challenges/shortest-palindrome/solution.md"
+                },
+                {
+                    "name": "basicCalculator",
+                    "slug": "basicCalculator",
+                    "difficulty": "hard",
+                    "content": "hard-challenges/basic-calculator/lesson.md",
+                    "files": ["hard-challenges/basic-calculator/main.mo"],
+                    "solution": "hard-challenges/basic-calculator/solution.md"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

@@ -1,70 +1,156 @@
 {
-    "lessons": [
-      {
-        "slug": "twoSum",
-        "name": "Two Sum",
-        "difficulty": "easy",
-        "tests": [
-          {
-            "functionName": "twoSum",
-            "description": "Find indices of two numbers that sum up to 9",
-            "input": {
-              "nums": [2, 7, 11, 15],
-              "target": 9
-            },
-            "expected": "?(0, +1)"
-          },
-          {
-            "functionName": "twoSum",
-            "description": "Find indices of two numbers that sum up to 6",
-            "input": {
-              "nums": [3, 2, 4],
-              "target": 6
-            },
-            "expected": "?(+1, +2)"
-          },
-          {
-            "functionName": "twoSum",
-            "description": "Find indices of two numbers that sum up to 6 (multiple pairs possible)",
-            "input": {
-              "nums": [3, 2, 5, 3],
-              "target": 6
-            },
-            "expected": "?(0, +3)"
-          }
-        ]
-      },
-      {
-        "slug": "isPalindrome",
-        "name": "Palindrome Numbers",
-        "difficulty": "easy",
-        "tests": [
-          {
-            "functionName": "isPalindrome",
-            "description": "Check if 121 is a palindrome",
-            "input": 121,
-            "expected": true
-          },
-          {
-            "functionName": "isPalindrome",
-            "description": "Check if -121 is a palindrome",
-            "input": -121,
-            "expected": false
-          },
-          {
-            "functionName": "isPalindrome",
-            "description": "Check if 10 is a palindrome",
-            "input": 10,
-            "expected": false
-          },
-          {
-            "functionName": "isPalindrome",
-            "description": "Check if 1 is a palindrome",
-            "input": 1,
-            "expected": true
-          }
-        ]
-      }
+    "lessons": [{
+            "slug": "twoSum",
+            "name": "Two Sum",
+            "difficulty": "easy",
+            "tests": [{
+                    "functionName": "twoSum",
+                    "description": "Find indices of two numbers that sum up to 9",
+                    "input": {
+                        "nums": [2, 7, 11, 15],
+                        "target": 9
+                    },
+                    "expected": "?(0, +1)"
+                },
+                {
+                    "functionName": "twoSum",
+                    "description": "Find indices of two numbers that sum up to 6",
+                    "input": {
+                        "nums": [3, 2, 4],
+                        "target": 6
+                    },
+                    "expected": "?(+1, +2)"
+                },
+                {
+                    "functionName": "twoSum",
+                    "description": "Find indices of two numbers that sum up to 6 (multiple pairs possible)",
+                    "input": {
+                        "nums": [3, 2, 5, 3],
+                        "target": 6
+                    },
+                    "expected": "?(0, +3)"
+                }
+            ]
+        },
+        {
+            "slug": "isPalindrome",
+            "name": "Palindrome Numbers",
+            "difficulty": "easy",
+            "tests": [{
+                    "functionName": "isPalindrome",
+                    "description": "Check if 121 is a palindrome",
+                    "input": 121,
+                    "expected": true
+                },
+                {
+                    "functionName": "isPalindrome",
+                    "description": "Check if -121 is a palindrome",
+                    "input": -121,
+                    "expected": false
+                },
+                {
+                    "functionName": "isPalindrome",
+                    "description": "Check if 10 is a palindrome",
+                    "input": 10,
+                    "expected": false
+                },
+                {
+                    "functionName": "isPalindrome",
+                    "description": "Check if 1 is a palindrome",
+                    "input": 1,
+                    "expected": true
+                }
+            ]
+        },
+        {
+            "slug": "majorityElement",
+            "name": "Majority Element",
+            "difficulty": "easy",
+            "tests": [{
+                    "functionName": "majorityElement",
+                    "description": "Find the majority element in [3, 2, 3]",
+                    "input": [3, 2, 3],
+                    "expected": "+3"
+                },
+                {
+                    "functionName": "majorityElement",
+                    "description": "Find the majority element in [2, 2, 1, 1, 1, 2, 2]",
+                    "input": [2, 2, 1, 1, 1, 2, 2],
+                    "expected": "+2"
+                },
+                {
+                    "functionName": "majorityElement",
+                    "description": "Find the majority element in [1]",
+                    "input": [1],
+                    "expected": "+1"
+                }
+            ]
+        },
+        {
+            "slug": "singleNumber",
+            "name": "Single Number",
+            "difficulty": "easy",
+            "tests": [{
+                    "functionName": "singleNumber",
+                    "description": "Find the single number in [2, 2, 1]",
+                    "input": [2, 2, 1],
+                    "expected": "+1"
+                },
+                {
+                    "functionName": "singleNumber",
+                    "description": "Find the single number in [4, 1, 2, 1, 2]",
+                    "input": [4, 1, 2, 1, 2],
+                    "expected": "+4"
+                },
+                {
+                    "functionName": "singleNumber",
+                    "description": "Find the single number in [1]",
+                    "input": [1],
+                    "expected": "+1"
+                }
+            ]
+        },
+        {
+            "slug": "shortestPalindrome",
+            "name": "Shortest Palindrome",
+            "difficulty": "hard",
+            "tests": [{
+                    "functionName": "shortestPalindrome",
+                    "description": "Find the shortest palindrome of 'aacecaaa'",
+                    "input": "aacecaaa",
+                    "expected": "aaacecaaa"
+                },
+                {
+                    "functionName": "shortestPalindrome",
+                    "description": "Find the shortest palindrome of 'abcd'",
+                    "input": "abcd",
+                    "expected": "dcbabcd"
+                }
+            ]
+        },
+        {
+            "slug": "basicCalculator",
+            "name": "Basic Calculator",
+            "difficulty": "hard",
+            "tests": [{
+                    "functionName": "calculate",
+                    "description": "Calculate the expression '1 + 1'",
+                    "input": "1 + 1",
+                    "expected": "+2"
+                },
+                {
+                    "functionName": "calculate",
+                    "description": "Calculate the expression ' 2-1 + 2 '",
+                    "input": " 2-1 + 2 ",
+                    "expected": "+3"
+                },
+                {
+                    "functionName": "calculate",
+                    "description": "Calculate the expression '(1+(4+5+2)-3)+(6+8)'",
+                    "input": "(1+(4+5+2)-3)+(6+8)",
+                    "expected": "+23"
+                }
+            ]
+        }
     ]
-  }
-  
+}

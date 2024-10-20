@@ -17,6 +17,7 @@ service : {
   completeChallenge: (principal, ChallengeInfo, bool) -> (bool);
   debugAllProgress: () -> ();
   getAllUsersDetails: () -> (vec UserProgressType) query;
+  getCurrentDateInfo: () -> (text) query;
   getMonthlyUsers: () -> (vec nat) query;
   getTotalUsers: () -> (nat) query;
   getUserDetails: (principal) -> (opt UserProgressType) query;
