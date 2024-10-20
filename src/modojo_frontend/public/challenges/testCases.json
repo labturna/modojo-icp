@@ -151,6 +151,111 @@
                     "expected": "+23"
                 }
             ]
+        },
+        {
+            "slug": "longestSubstringWithoutRepeatingCharacters",
+            "name": "Longest Substring Without Repeating Characters",
+            "difficulty": "hard",
+            "tests": [{
+                    "functionName": "lengthOfLongestSubstring",
+                    "description": "Find the length of the longest substring without repeating characters in 'abcabcbb'",
+                    "input": "abcabcbb",
+                    "expected": "+3"
+                },
+                {
+                    "functionName": "lengthOfLongestSubstring",
+                    "description": "Find the length of the longest substring without repeating characters in 'bbbbb'",
+                    "input": "bbbbb",
+                    "expected": "+1"
+                },
+                {
+                    "functionName": "lengthOfLongestSubstring",
+                    "description": "Find the length of the longest substring without repeating characters in 'pwwkew'",
+                    "input": "pwwkew",
+                    "expected": "+3"
+                }
+            ]
+        },
+        {
+            "slug": "threeSum",
+            "name": "3Sum",
+            "difficulty": "medium",
+            "tests": [{
+                    "functionName": "threeSum",
+                    "description": "Find all unique triplets in the array which gives the sum of zero",
+                    "input": [-1, 0, 1, 2, -1, -4],
+                    "expected": "[[-1, -1, 2], [-1, 0, 1]]"
+                },
+                {
+                    "functionName": "threeSum",
+                    "description": "Find all unique triplets in the array which gives the sum of zero",
+                    "input": [0, 0, 0],
+                    "expected": "[[0, 0, 0]]"
+                },
+                {
+                    "functionName": "threeSum",
+                    "description": "Find all unique triplets in the array which gives the sum of zero",
+                    "input": [0, 0, 0, 0],
+                    "expected": "[[0, 0, 0]]"
+                }
+            ]
+        },
+        {
+            "slug": "threeSumClosest",
+            "name": "3Sum Closest",
+            "difficulty": "medium",
+            "tests": [{
+                    "functionName": "threeSumClosest",
+                    "description": "Find the sum of the three integers that is closest to the target",
+                    "input": {
+                        "nums": [-1, 2, 1, -4],
+                        "target": 1
+                    },
+                    "expected": "+2"
+                },
+                {
+                    "functionName": "threeSumClosest",
+                    "description": "Find the sum of the three integers that is closest to the target",
+                    "input": {
+                        "nums": [1, 1, 1, 0],
+                        "target": -100
+                    },
+                    "expected": "+2"
+                },
+                {
+                    "functionName": "threeSumClosest",
+                    "description": "Find the sum of the three integers that is closest to the target",
+                    "input": {
+                        "nums": [1, 1, 1, 0],
+                        "target": 100
+                    },
+                    "expected": "+3"
+                }
+            ]
+        },
+        {
+            "slug": "letterCombinations",
+            "name": "Letter Combinations of a Phone Number",
+            "difficulty": "medium",
+            "tests": [{
+                    "functionName": "letterCombinations",
+                    "description": "Find all possible letter combinations that the number could represent",
+                    "input": "23",
+                    "expected": "[\"ad\", \"ae\", \"af\", \"bd\", \"be\", \"bf\", \"cd\", \"ce\", \"cf\"]"
+                },
+                {
+                    "functionName": "letterCombinations",
+                    "description": "Find all possible letter combinations that the number could represent",
+                    "input": "2",
+                    "expected": "[\"a\", \"b\", \"c\"]"
+                },
+                {
+                    "functionName": "letterCombinations",
+                    "description": "Find all possible letter combinations that the number could represent",
+                    "input": "234",
+                    "expected": "[\"adg\", \"adh\", \"adi\", \"aeg\", \"aeh\", \"aei\", \"afg\", \"afh\", \"afi\", \"bdg\", \"bdh\", \"bdi\", \"beg\", \"beh\", \"bei\", \"bfg\", \"bfh\", \"bfi\", \"cdg\", \"cdh\", \"cdi\", \"ceg\", \"ceh\", \"cei\", \"cfg\", \"cfh\", \"cfi\"]"
+                }
+            ]
         }
     ]
 }

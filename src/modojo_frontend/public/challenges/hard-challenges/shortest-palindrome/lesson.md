@@ -21,11 +21,10 @@ Returns the shortest palindrome you can find by adding characters in front of th
 ```
 
 ## Examples:
-
+```plaintext
 - shortestPalindrome("aacecaaa") returns "aaacecaaa"
 
 - shortestPalindrome("abcd") returns "dcbabcd"
 
 - shortestPalindrome("a") returns "a"
-
-
+```
