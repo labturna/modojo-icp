@@ -17,6 +17,10 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
   const [isUsernamePopupOpen, setIsUsernamePopupOpen] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const dropdownRef = useRef(null);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [userChallengesCompleted, setUserChallengesCompleted] = useState(0);
+  const [userScore, setUserScore] = useState(0);
+  const [userRegistrationDate, setUserRegistrationDate] = useState("Unknown");
 
   useEffect(() => {
     const logInUserToBackend = async () => {
@@ -63,7 +67,15 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         const principalUser = Principal.fromText(userId);
         const userDetailsResponse = await modojoActor.getUserDetails(principalUser);
         const userName = userDetailsResponse[0].username;
+        const challengesCompleted = userDetailsResponse[0].completedChallenges;
+        const score = userDetailsResponse[0].score;
+        const registrationDate = userDetailsResponse[0].registrationDate;
+        console.log(challengesCompleted);
+        console.log(registrationDate);
         setUserDetails(userName);
+        setUserChallengesCompleted(challengesCompleted);
+        setUserScore(score);
+        setUserRegistrationDate(registrationDate);
 
         if (userName === "Unknown") {
           setIsUsernamePopupOpen(true);
@@ -191,6 +203,15 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
     }
     setIsOpen(false);
   };
+
+  const openProfileModal = () => {
+    setIsProfileModalOpen(true);
+  };
+
+  const closeProfileModal = () => {
+    setIsProfileModalOpen(false);
+  };
+
   return (
     <>
       <div className="bg-[#1e1e36] rounded-lg mt-3 p-4 flex justify-between items-center shadow-md">
@@ -240,7 +261,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
             )}
 
             <div className="flex space-x-2">
-              <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+              <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer" onClick={openProfileModal}>
                 {userId && <span className="text-[#b3d4f9] mr-2">{userDetails}</span>} 
                 <FontAwesomeIcon icon={faUser} size="lg" className="mr-2" />
               </li>
@@ -269,6 +290,31 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
               onClick={handleUsernameSubmit}
             >
               Save
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Profile Modal */}
+      {isProfileModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-[#2e2e50] p-6 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-white text-2xl font-bold mb-4">Profile</h2>
+            <p className="text-white mb-4">Username: <span class="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{userDetails}</span></p>
+            <p className="text-white mb-4">User ID: {userId}</p>
+            <p className="text-white mb-4">Challenges Completed: {userChallengesCompleted.length > 0 ? userChallengesCompleted.map((challenge, index) => (
+              <span key={index} className="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
+                {challenge}
+              </span>
+            )) : "None"}</p>
+            <p className="text-white mb-4">Score: <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">{userScore}</span>
+            </p>
+            <p className="text-white mb-4">Registration Date: {new Date(Number(userRegistrationDate) / 1_000_000).toLocaleDateString()}</p>
+            <button
+              className="bg-[#2e2e50] text-white px-4 py-2 rounded-md border border-[#b3d4f9] hover:bg-[#2e2e50] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md"
+              onClick={closeProfileModal}
+            >
+              Close
             </button>
           </div>
         </div>

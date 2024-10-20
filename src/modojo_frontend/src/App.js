@@ -8,7 +8,8 @@ import Dashboard from './platform-components/Dashboard';
 import Overview from './platform-components/Overview';
 import Challenges from './platform-components/Challenges';
 import Leaderboard from './platform-components/LeaderBoard';
-import PrivateRoute from './components/PrivateRoute'; // PrivateRoute'ı ayrı bir bileşen olarak oluştur
+import PrivateRoute from './components/PrivateRoute'; 
+
 
 const App = () => {
   return (
