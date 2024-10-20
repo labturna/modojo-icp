@@ -38,6 +38,3 @@ Each element in the array appears twice except for one element which appears onl
 - singleNumber([4,1,2,1,2]) returns 4
 
 - singleNumber([1]) returns 1
-
-```
-

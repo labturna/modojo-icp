@@ -45,6 +45,37 @@
             ]
         },
         {
+            "name": "Medium Challenges",
+            "slug": "medium-challenges",
+            "children": [{
+                    "name": "3Sum",
+                    "slug": "threeSum",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/three-sum/lesson.md",
+                    "files": ["medium-challenges/three-sum/main.mo"],
+                    "solution": "medium-challenges/three-sum/solution.md"
+                },
+                {
+                    "name": "3Sum Closest",
+                    "slug": "threeSumClosest",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/three-sum-closest/lesson.md",
+                    "files": ["medium-challenges/three-sum-closest/main.mo"],
+                    "solution": "medium-challenges/three-sum-closest/solution.md"
+                },
+                {
+                    "name": "Letter Combinations of a Phone Number",
+                    "slug": "letterCombinations",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/letter-combinations/lesson.md",
+                    "files": ["medium-challenges/letter-combinations/main.mo"],
+                    "solution": "medium-challenges/letter-combinations/solution.md"
+                }
+            ]
+
+
+        },
+        {
             "name": "Hard Challenges",
             "slug": "hard-challenges",
             "children": [{
@@ -62,6 +93,14 @@
                     "content": "hard-challenges/basic-calculator/lesson.md",
                     "files": ["hard-challenges/basic-calculator/main.mo"],
                     "solution": "hard-challenges/basic-calculator/solution.md"
+                },
+                {
+                    "name": "Longest Substring Without Repeating Characters",
+                    "slug": "longestSubstringWithoutRepeatingCharacters",
+                    "difficulty": "hard",
+                    "content": "hard-challenges/longest-substring-without-repeating-characters/lesson.md",
+                    "files": ["hard-challenges/longest-substring-without-repeating-characters/main.mo"],
+                    "solution": "hard-challenges/longest-substring-without-repeating-characters/solution.md"
                 }
             ]
         }

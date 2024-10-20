@@ -30,6 +30,7 @@ The expression will not contain any leading spaces.
 ```
 
 ## Examples:
+```plaintext
 
 - calculate("1 + 1") returns 2
 
@@ -38,3 +39,4 @@ The expression will not contain any leading spaces.
 - calculate("(1+(4+5+2)-3)+(6+8)") returns 23
 
 - calculate("1") returns 1
+```
