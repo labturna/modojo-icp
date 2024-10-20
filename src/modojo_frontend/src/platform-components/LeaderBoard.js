@@ -6,12 +6,15 @@ import Footer from '../components/Footer';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
 import { useAuth } from '../context/AuthContext';
 import { Principal } from "@dfinity/principal";
+import LoadingScreen from './LoadingScreen';
 
 const Leaderboard = () => {
 
     const [leaderBoardUsers, setLeaderBoardUsers] = useState([]);
     const { userId } = useAuth();
     const [userName, setUsername] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         const fetchLeaderBoardUsers = async () => {
             try {
@@ -27,7 +30,7 @@ const Leaderboard = () => {
                     agent,
                     canisterId,
                 });
-                console.log('modojoActor', modojoActor)
+                // console.log('modojoActor', modojoActor)
                 const users = await modojoActor.getAllUsersDetails();
                 const sortedUsers = users.sort((a, b) => b.score - a.score);
                 // console.log('users', users)
@@ -69,6 +72,18 @@ const Leaderboard = () => {
         fetchUserDetails();
     }, []);
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
     return (
         <div className="flex">
             <Sidebar />

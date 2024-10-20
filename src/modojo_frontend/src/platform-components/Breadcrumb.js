@@ -36,7 +36,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
           await modojoActor.logInUser(principalUser);
         } catch (error) {
           console.error("Failed to log in user to backend:", error);
-        } 
+        }
       } else {
         console.error("User ID or Canister ID is not defined.");
       }
@@ -191,7 +191,6 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
     }
     setIsOpen(false);
   };
-
   return (
     <>
       <div className="bg-[#1e1e36] rounded-lg mt-3 p-4 flex justify-between items-center shadow-md">

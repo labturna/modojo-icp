@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.a4a19edc.css",
-    "main.js": "/static/js/main.22a9dc0e.js",
+    "main.css": "/static/css/main.405f52f3.css",
+    "main.js": "/static/js/main.d8b4e58a.js",
     "static/js/1336.23318931.chunk.js": "/static/js/1336.23318931.chunk.js",
     "static/js/4756.0f10283d.chunk.js": "/static/js/4756.0f10283d.chunk.js",
     "static/js/578.22d204a1.chunk.js": "/static/js/578.22d204a1.chunk.js",
@@ -91,8 +91,8 @@
     "static/media/modojo-logo.png": "/static/media/modojo-logo.32533b3582f7edc34619.png",
     "static/media/codicon.ttf": "/static/media/codicon.f6283f7ccaed1249d9eb.ttf",
     "index.html": "/index.html",
-    "main.a4a19edc.css.map": "/static/css/main.a4a19edc.css.map",
-    "main.22a9dc0e.js.map": "/static/js/main.22a9dc0e.js.map",
+    "main.405f52f3.css.map": "/static/css/main.405f52f3.css.map",
+    "main.d8b4e58a.js.map": "/static/js/main.d8b4e58a.js.map",
     "1336.23318931.chunk.js.map": "/static/js/1336.23318931.chunk.js.map",
     "4756.0f10283d.chunk.js.map": "/static/js/4756.0f10283d.chunk.js.map",
     "578.22d204a1.chunk.js.map": "/static/js/578.22d204a1.chunk.js.map",
@@ -181,7 +181,7 @@
     "7400.8c321e1a.chunk.js.map": "/static/js/7400.8c321e1a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a4a19edc.css",
-    "static/js/main.22a9dc0e.js"
+    "static/css/main.405f52f3.css",
+    "static/js/main.d8b4e58a.js"
   ]
 }

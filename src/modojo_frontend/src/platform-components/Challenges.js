@@ -1,10 +1,24 @@
 // src/components/MainContent.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BreadcrumbCard from './Breadcrumb';
 import Sidebar from './Sidebar';
 import BrowserEditor from './Editor';
+import LoadingScreen from './LoadingScreen';
+
 const Challenges = () => {
     const [selectedLesson, setSelectedLesson] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
     const handleLessonChange = (newLessonSlug) => {
         // console.log("New lesson selected:", newLessonSlug);
         setSelectedLesson(newLessonSlug); // Update the selected lesson
@@ -12,6 +26,7 @@ const Challenges = () => {
     const handleSelectLesson = (slug) => {
         setSelectedLesson(slug);
     };
+
 
     return (
         <div className="flex">

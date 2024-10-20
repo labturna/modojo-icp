@@ -4,7 +4,9 @@ import BreadcrumbCard from './Breadcrumb';
 import Footer from '../components/Footer';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import '../assets/css/markdown.css'
+import '../assets/css/markdown.css';
+import LoadingScreen from './LoadingScreen';
+
 
 const filesWithSlugs = [
     { name: 'overview.md', slug: 'overview' },
@@ -62,6 +64,7 @@ const filesWithSlugs = [
 const Overview = () => {
     const [selectedFile, setSelectedFile] = useState('overview');
     const [markdownContent, setMarkdownContent] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchMarkdown = async () => {
@@ -79,6 +82,17 @@ const Overview = () => {
 
         fetchMarkdown();
     }, [selectedFile]);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <div className="flex flex-row sm:flex-row">

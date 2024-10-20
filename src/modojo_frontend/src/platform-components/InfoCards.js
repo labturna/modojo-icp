@@ -25,6 +25,8 @@ const DashboardInfoCards = () => {
   const { userId } = useAuth();
   const [userCompletedChallenges, setUserCompletedChallenges] = useState(0);
   const [userScore, setUserScore] = useState(0);
+
+
   useEffect(() => {
     const fetchTotalUsers = async () => {
       try {
@@ -78,6 +80,7 @@ const DashboardInfoCards = () => {
 
     fetchUserDetails();
   }, []);
+
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
