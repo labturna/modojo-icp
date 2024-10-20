@@ -45,10 +45,10 @@
             ]
         },
         {
-            "name": "Hart Challenges",
+            "name": "Hard Challenges",
             "slug": "hard-challenges",
             "children": [{
-                    "name": "shortestPalindrome",
+                    "name": "Shortest Palindrome",
                     "slug": "shortestPalindrome",
                     "difficulty": "hard",
                     "content": "hard-challenges/shortest-palindrome/lesson.md",
@@ -56,7 +56,7 @@
                     "solution": "hard-challenges/shortest-palindrome/solution.md"
                 },
                 {
-                    "name": "basicCalculator",
+                    "name": "Basic Calculator",
                     "slug": "basicCalculator",
                     "difficulty": "hard",
                     "content": "hard-challenges/basic-calculator/lesson.md",
