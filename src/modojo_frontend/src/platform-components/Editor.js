@@ -49,7 +49,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 });
                 const principalUser = Principal.fromText(userId);
                 const userDetails = await modojoActor.getUserDetails(principalUser);
-                console.log(userDetails[0].completedChallenges);
+                // console.log(userDetails[0].completedChallenges);
                 setCompletedChallenges(userDetails[0].completedChallenges || []);
             } catch (error) {
                 console.error("Failed to fetch completed challenges:", error);
@@ -204,7 +204,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
     }
 
     const handleRun = async () => {
-        console.log('canisterId', canisterId)
+        // console.log('canisterId', canisterId)
         try {
             await mo.clearPackages();
             await mo.installPackages({ base: 'dfinity/motoko-base/master/src' });
@@ -235,7 +235,7 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 if (selectedLesson === lesson.slug) {
                     challengePayload.challenge = {
                         id: lesson.slug,
-                        name: lesson.name,
+                        name: lesson.slug,
                         difficulty: lesson.difficulty
                     }
                     const results = await runTests(codeToRun, lesson.tests.map(test => ({
@@ -287,8 +287,8 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 agent,
                 canisterId,
             });
-            console.log('challenge modojoActor', modojoActor)
-            console.log('run challenge solution', payload)
+            // console.log('challenge modojoActor', modojoActor);
+            // console.log('run challenge solution', payload);
             await modojoActor.completeChallenge(payload?.user, payload?.challenge, payload?.isSuccess);
         } catch (error) {
             console.error("Failed to complete challenge:", error);
@@ -381,10 +381,8 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
         selectOnLineNumbers: true,
         automaticLayout: true,
     };
-    const normalizedSelectedLesson = selectedLesson ? selectedLesson.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase() : '';
-    const isChallengeCompleted = completedChallenges.some(challenge => challenge.toLowerCase() === normalizedSelectedLesson);
-
-    console.log(isChallengeCompleted);
+    const isChallengeCompleted = completedChallenges.includes(selectedLesson);
+    // console.log(isChallengeCompleted);
     return (
         <div className="split-container rounded-md mt-2">
             <Split

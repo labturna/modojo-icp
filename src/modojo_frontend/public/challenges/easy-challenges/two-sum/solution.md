@@ -1,8 +1,4 @@
 ```motoko
-import HashMap "mo:base/HashMap";
-import Int "mo:base/Int";
-import Iter "mo:base/Iter";
-
 // Function to solve the Two Sum problem
 func twoSum(nums: [Int], target: Int): ?(Int, Int) {
     let map = HashMap.HashMap<Int, Int>(10, Int.equal, Int.hash);

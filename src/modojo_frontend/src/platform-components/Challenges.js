@@ -6,7 +6,7 @@ import BrowserEditor from './Editor';
 const Challenges = () => {
     const [selectedLesson, setSelectedLesson] = useState(null);
     const handleLessonChange = (newLessonSlug) => {
-        console.log("New lesson selected:", newLessonSlug);
+        // console.log("New lesson selected:", newLessonSlug);
         setSelectedLesson(newLessonSlug); // Update the selected lesson
     };
     const handleSelectLesson = (slug) => {
