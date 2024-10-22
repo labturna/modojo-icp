@@ -12,7 +12,7 @@ import mo from 'motoko/interpreter';
 import { useAuth } from '../context/AuthContext';
 import { HttpAgent, Actor } from '@dfinity/agent';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend/index';
-
+import { useLocation } from 'react-router-dom';
 
 const canisterId = process.env.REACT_APP_MODOJO_BACKEND_CANISTER_ID || backendCanisterId;
 const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, pageType }) => {
@@ -27,6 +27,8 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
     const [activeTab, setActiveTab] = useState('main.mo');
     const [showSolution, setShowSolution] = useState(false);
     const [completedChallenges, setCompletedChallenges] = useState([]);
+    const location = useLocation();
+    const isPracticePage = location.pathname.includes('practice');
 
     useEffect(() => {
         window.MonacoEnvironment = {
@@ -172,7 +174,6 @@ const BrowserEditor = ({ selectedLesson: initialSelectedLesson, onLessonChange, 
                 // console.log(appendedCode);
                 mo.write('Main.mo', appendedCode);
                 const result = await mo.run('Main.mo');
-console.log(result)
                 try {
                     if (result.stdout) {
                         // Extract relevant output
@@ -183,9 +184,9 @@ console.log(result)
                         } catch (e) {
                             parsedOutput = cleanOutput === 'true' ? true : cleanOutput === 'false' ? false : cleanOutput;
                         }
-                        console.log(parsedOutput, expected);
-                        console.log(JSON.stringify(parsedOutput), JSON.stringify(expected));
-                        console.log(parsedOutput === expected);
+                        // console.log(parsedOutput, expected);
+                        // console.log(JSON.stringify(parsedOutput), JSON.stringify(expected));
+                        // console.log(parsedOutput === expected);
                         const success = JSON.stringify(parsedOutput) === JSON.stringify(expected);
                         if (success) {
                             results.push({ description, success, output: parsedOutput, expected });
@@ -386,6 +387,24 @@ console.log(result)
     };
     const isChallengeCompleted = completedChallenges.includes(selectedLesson);
     // console.log(isChallengeCompleted);
+    const handleRunPractice = async () => {
+        try {
+            await mo.clearPackages();
+            await mo.installPackages({ base: 'dfinity/motoko-base/master/src' });
+            const codeToRun = code;
+            mo.write('Main.mo', codeToRun);
+            const result = await mo.run('Main.mo');
+            if (result.result.error) {
+                document.querySelector('.output').innerHTML = `<pre style="color: red;">Hata: ${result.result.error}</pre>`;
+            } else if (result.stdout) {
+                document.querySelector('.output').innerHTML = `<pre>${result.stdout}</pre>`;
+            } else {
+                document.querySelector('.output').innerHTML = `<pre></pre>`;
+            }
+        } catch (error) {
+            document.querySelector('.output').innerHTML = `<pre style="color: red;">Error: ${error.message}</pre>`;
+        }
+    };
     return (
         <div className="split-container rounded-md mt-2">
             <Split
@@ -458,7 +477,7 @@ console.log(result)
                                         <FaCheckCircle /> 
                                     </button>
                                 )}
-                                <button onClick={handleRun} className="p-2 rounded-full bg-[#15803d] hover:bg-[#22c55e]">
+                                <button onClick={isPracticePage ? handleRunPractice : handleRun} className="p-2 rounded-full bg-[#15803d] hover:bg-[#22c55e]">
                                     <FaPlay />
                                 </button>
                                 <button onClick={handleClear} className="p-2 rounded-full bg-[#0e7490] hover:bg-[#06b6d4]">

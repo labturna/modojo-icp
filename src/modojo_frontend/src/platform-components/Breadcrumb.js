@@ -70,8 +70,6 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         const challengesCompleted = userDetailsResponse[0].completedChallenges;
         const score = userDetailsResponse[0].score;
         const registrationDate = userDetailsResponse[0].registrationDate;
-        console.log(challengesCompleted);
-        console.log(registrationDate);
         setUserDetails(userName);
         setUserChallengesCompleted(challengesCompleted);
         setUserScore(score);

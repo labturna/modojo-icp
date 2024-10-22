@@ -13,7 +13,7 @@ const Sidebar = () => {
   return (
     <aside className={`${isOpen ? 'w-64' : 'w-16'} bg-[#1e1e36] text-white h-screen sticky top-0 flex flex-col transition-all duration-300`}>
       <div className="p-4 flex justify-between items-center">
-        {isOpen && <img src={logo} className='w-32 object-contain' alt='MoDojo' />}
+        {isOpen && <img src={logo} className='w-12 h-12 object-contain' alt='MoDojo' />}
         <button onClick={toggleSidebar} className="focus:outline-none text-[#b3d4f9] px-2">
           <FontAwesomeIcon icon={faBars} size="lg" />
         </button>
