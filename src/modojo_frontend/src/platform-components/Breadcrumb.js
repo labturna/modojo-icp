@@ -75,8 +75,11 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         setUserScore(score);
         setUserRegistrationDate(registrationDate);
 
-        if (userName === "Unknown") {
+        // Kullanıcı adı "Unknown" ise veya boş ise pop-up aç
+        if (userName === "Unknown" || !userName) {
           setIsUsernamePopupOpen(true);
+        } else {
+          setIsUsernamePopupOpen(false);
         }
       } catch (error) {
         console.error("Failed to fetch user's details:", error);
@@ -273,8 +276,8 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
 
       {/* Pop-up for Username */}
       {isUsernamePopupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-[#2e2e50] p-6 rounded-lg shadow-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-[#2e2e50] p-6 rounded-lg shadow-lg z-50">
             <h2 className="text-white text-2xl font-bold mb-4">Enter Your Username</h2>
             <input
               type="text"
@@ -292,6 +295,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
           </div>
         </div>
       )}
+
 
       {/* Profile Modal */}
       {isProfileModalOpen && (
