@@ -48,22 +48,27 @@ actor ModojoProgressTracker {
         };
     };
 
-    // update username
-    public func updateUsername(user: Principal, newUsername: Text) : async Bool {
-        switch (userProgress.get(user)) {
-            case (?progress) {
-                let updatedProgress = { 
-                    progress with 
-                    username = newUsername 
-                };
-                userProgress.put(user, updatedProgress);
-                return true;
+// update username
+public func updateUsername(user: Principal, newUsername: Text) : async Bool {
+    for ((_, progress) in userProgress.entries()) {
+        if (progress.username == newUsername) {
+            return false;
+        }
+    };
+    switch (userProgress.get(user)) {
+        case (?progress) {
+            let updatedProgress = { 
+                progress with 
+                username = newUsername 
             };
-            case null {
-                return false;
-            };
+            userProgress.put(user, updatedProgress);
+            return true;
+        };
+        case null {
+            return false; 
         };
     };
+};
 
   private func incrementTotalUsers() : async () {
     totalUsers += 1;
