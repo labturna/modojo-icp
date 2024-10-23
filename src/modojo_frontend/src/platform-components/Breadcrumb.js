@@ -16,6 +16,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
   const [userDetails, setUserDetails] = useState("Unknown");
   const [isUsernamePopupOpen, setIsUsernamePopupOpen] = useState(false);
   const [newUsername, setNewUsername] = useState("");
+  const [usernameWarningMsg, setUsernameWarningMsg] = useState("");
   const dropdownRef = useRef(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [userChallengesCompleted, setUserChallengesCompleted] = useState(0);
@@ -29,7 +30,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
           const agent = new HttpAgent();
           if (process.env.REACT_APP_ENV === 'development') {
             await agent.fetchRootKey().catch(err => {
-                console.log(err)
+              console.log(err)
             });
           }
           const modojoActor = Actor.createActor(ModojoIDL, {
@@ -70,15 +71,16 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         const challengesCompleted = userDetailsResponse[0].completedChallenges;
         const score = userDetailsResponse[0].score;
         const registrationDate = userDetailsResponse[0].registrationDate;
-        console.log(challengesCompleted);
-        console.log(registrationDate);
         setUserDetails(userName);
         setUserChallengesCompleted(challengesCompleted);
         setUserScore(score);
         setUserRegistrationDate(registrationDate);
 
-        if (userName === "Unknown") {
+        // Kullanıcı adı "Unknown" ise veya boş ise pop-up aç
+        if (userName === "Unknown" || !userName) {
           setIsUsernamePopupOpen(true);
+        } else {
+          setIsUsernamePopupOpen(false);
         }
       } catch (error) {
         console.error("Failed to fetch user's details:", error);
@@ -99,9 +101,16 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         canisterId,
       });
       const principalUser = Principal.fromText(userId);
-      await modojoActor.updateUsername(principalUser, newUsername); // `updateUsername` adlı bir backend fonksiyonu oluşturmanız gerekecek
-      setUserDetails(newUsername);
-      setIsUsernamePopupOpen(false);
+      const res = await modojoActor.updateUsername(principalUser, newUsername);
+      if (res) {
+        setUserDetails(newUsername);
+        setIsUsernamePopupOpen(false);
+        setUsernameWarningMsg("")
+      }
+      else {
+        setUsernameWarningMsg("Username already exists!")
+      }
+
     } catch (error) {
       console.error("Failed to update username:", error);
     }
@@ -262,7 +271,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
 
             <div className="flex space-x-2">
               <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer" onClick={openProfileModal}>
-                {userId && <span className="text-[#b3d4f9] mr-2">{userDetails}</span>} 
+                {userId && <span className="text-[#b3d4f9] mr-2">{userDetails}</span>}
                 <FontAwesomeIcon icon={faUser} size="lg" className="mr-2" />
               </li>
               <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
@@ -275,8 +284,8 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
 
       {/* Pop-up for Username */}
       {isUsernamePopupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-[#2e2e50] p-6 rounded-lg shadow-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-[#2e2e50] p-6 rounded-lg shadow-lg z-50">
             <h2 className="text-white text-2xl font-bold mb-4">Enter Your Username</h2>
             <input
               type="text"
@@ -291,9 +300,17 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
             >
               Save
             </button>
+
+            {/* Warning message */}
+            {usernameWarningMsg && (
+              <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                {usernameWarningMsg}
+              </div>
+            )}
           </div>
         </div>
       )}
+
 
       {/* Profile Modal */}
       {isProfileModalOpen && (
