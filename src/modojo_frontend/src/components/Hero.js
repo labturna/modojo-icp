@@ -1,8 +1,19 @@
 import React from 'react';
 import '../assets/css/Hero.css';
 import { FaBook, FaTrophy, FaCertificate } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
 const Hero = () => {
+    const { isAuthenticated, handleLogin } = useAuth();
+
+    const handleGetStarted = () => {
+        if (!isAuthenticated) {
+            handleLogin();
+        } else {
+            window.location.href = '/dashboard';
+        }
+    };
+
     return (
         <section id="hero" className="relative text-white min-h-screen pt-20 flex flex-col items-center">
             <div className="container mx-auto text-center relative z-10 px-4">
@@ -28,7 +39,7 @@ const Hero = () => {
                 </h2>
                 <p className="text-4xl mb-8">Learn Motoko and master the Internet Computer ecosystem.</p>
                 <button
-                    onClick={() => window.location.href = '/dashboard'}
+                    onClick={handleGetStarted}
                     className="shimmer-button bg-[#635985] py-3 px-8 rounded-lg"
                 >
                     Get Started
