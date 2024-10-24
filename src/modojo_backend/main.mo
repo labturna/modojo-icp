@@ -49,29 +49,8 @@ actor ModojoProgressTracker {
       case (?progress) {
         var badges = progress.badges;
 
-
         if (progress.score >= 80.0 and Array.indexOf("Guru Badge", badges, Text.equal) == null) {
           badges := Array.append(badges, ["Guru Badge"]);
-
-// update username
-public func updateUsername(user: Principal, newUsername: Text) : async Bool {
-    for ((_, progress) in userProgress.entries()) {
-        if (progress.username == newUsername) {
-            return false;
-        }
-    };
-    switch (userProgress.get(user)) {
-        case (?progress) {
-            let updatedProgress = { 
-                progress with 
-                username = newUsername 
-            };
-            userProgress.put(user, updatedProgress);
-            return true;
-        };
-        case null {
-            return false; 
-
         };
         if (progress.score >= 30.0 and Array.indexOf("Master Badge", badges, Text.equal) == null) {
           badges := Array.append(badges, ["Master Badge"]);
@@ -138,7 +117,6 @@ public func updateUsername(user: Principal, newUsername: Text) : async Bool {
           };
       };
   };
-};
 
   private func incrementTotalUsers() : async () {
     totalUsers += 1;
