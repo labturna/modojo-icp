@@ -22,6 +22,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
   const [userChallengesCompleted, setUserChallengesCompleted] = useState(0);
   const [userScore, setUserScore] = useState(0);
   const [userRegistrationDate, setUserRegistrationDate] = useState("Unknown");
+  const [userBadges, setUserBadges] = useState([]);
 
   useEffect(() => {
     const logInUserToBackend = async () => {
@@ -71,10 +72,12 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         const challengesCompleted = userDetailsResponse[0].completedChallenges;
         const score = userDetailsResponse[0].score;
         const registrationDate = userDetailsResponse[0].registrationDate;
+        const badges = userDetailsResponse[0].badges;
         setUserDetails(userName);
         setUserChallengesCompleted(challengesCompleted);
         setUserScore(score);
         setUserRegistrationDate(registrationDate);
+        setUserBadges(badges);
 
         // Kullanıcı adı "Unknown" ise veya boş ise pop-up aç
         if (userName === "Unknown" || !userName) {
@@ -323,10 +326,17 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
               <span key={index} className="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
                 {challenge}
               </span>
-            )) : "None"}</p>
+            )) : "0"}</p>
             <p className="text-white mb-4">Score: <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">{userScore}</span>
             </p>
             <p className="text-white mb-4">Registration Date: {new Date(Number(userRegistrationDate) / 1_000_000).toLocaleDateString()}</p>
+            <p className="text-white mb-4">
+              Earned Badges: {Array.isArray(userBadges) && userBadges.length > 0 ? userBadges.map((userBadge, index) => (
+                <span key={index} className="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
+                  {userBadge}
+                </span>
+              )) : "No Badge"}
+            </p>
             <button
               className="bg-[#2e2e50] text-white px-4 py-2 rounded-md border border-[#b3d4f9] hover:bg-[#2e2e50] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md"
               onClick={closeProfileModal}

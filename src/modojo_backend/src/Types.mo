@@ -10,6 +10,7 @@ module {
         score: Float; // Başarı oranı
         registrationDate: Time.Time; // Kayıt tarihi
         completedChallenges: [Text]; // Tamamlanan challenge'lar
+        badges: [Text];
     };
     public type WeeklyUsers = [var Nat];
     public type ChallengeInfo = {

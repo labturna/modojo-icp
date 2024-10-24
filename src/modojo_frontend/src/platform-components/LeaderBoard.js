@@ -8,10 +8,13 @@ import { useAuth } from '../context/AuthContext';
 import { Principal } from "@dfinity/principal";
 
 const Leaderboard = () => {
-
     const [leaderBoardUsers, setLeaderBoardUsers] = useState([]);
     const { userId } = useAuth();
     const [userName, setUsername] = useState("");
+
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         const fetchLeaderBoardUsers = async () => {
@@ -28,10 +31,8 @@ const Leaderboard = () => {
                     agent,
                     canisterId,
                 });
-                // console.log('modojoActor', modojoActor)
                 const users = await modojoActor.getAllUsersDetails();
                 const sortedUsers = users.sort((a, b) => b.score - a.score);
-                // console.log('users', users)
                 setLeaderBoardUsers(sortedUsers);
             } catch (error) {
                 console.error("Failed to fetch total users:", error);
@@ -40,6 +41,7 @@ const Leaderboard = () => {
 
         fetchLeaderBoardUsers();
     }, []);
+
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
@@ -57,10 +59,6 @@ const Leaderboard = () => {
                 });
                 const principalUser = Principal.fromText(userId);
                 const userDetails = await modojoActor.getUserDetails(principalUser);
-                // const completedChallenge = userDetails[0].completedChallengeCount
-                // const userScore = userDetails[0].score
-                // setUserCompletedChallenges(Number(userDetails[0].completedChallengeCount.toString()));
-                // setUserScore(userDetails[0].score);
                 setUsername(userDetails[0].username);
             } catch (error) {
                 console.error("Failed to fetch user's details:", error);
@@ -69,6 +67,24 @@ const Leaderboard = () => {
 
         fetchUserDetails();
     }, []);
+
+    // Calculate pagination values
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = leaderBoardUsers.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(leaderBoardUsers.length / itemsPerPage);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
     return (
         <div className="flex">
@@ -88,12 +104,12 @@ const Leaderboard = () => {
                             <div>Score</div>
                         </div>
                         <div className="mt-4">
-                            {leaderBoardUsers.map((entry, index) => (
+                            {currentItems.map((entry, index) => (
                                 <div
                                     key={index}
                                     className={`grid grid-cols-5 gap-4 py-2 px-4 rounded-lg ${entry.username === userName ? 'bg-[#312e81] text-white' : 'hover:bg-[#2e2e50]'}`}
                                 >
-                                    <div className='text-lg text-bold'>{index + 1}</div>
+                                    <div className='text-lg text-bold'>{indexOfFirstItem + index + 1}</div>
                                     <div className='text-lg'>{entry.username}</div>
                                     <div className="text-lg">{Number(entry.completedChallengeCount)}</div>
                                     <div className="text-lg">
@@ -102,6 +118,23 @@ const Leaderboard = () => {
                                     <div className="text-lg">{entry.score}</div>
                                 </div>
                             ))}
+                        </div>
+                        <div className="flex justify-between items-center mt-4">
+                            <button
+                                onClick={handlePreviousPage}
+                                disabled={currentPage === 1}
+                                className="bg-[#2e2e50] text-[#b3d4f9] px-4 py-2 rounded-md hover:bg-[#3e3e5e] disabled:opacity-50"
+                            >
+                                Previous
+                            </button>
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <button
+                                onClick={handleNextPage}
+                                disabled={currentPage === totalPages}
+                                className="bg-[#2e2e50] text-[#b3d4f9] px-4 py-2 rounded-md hover:bg-[#3e3e5e] disabled:opacity-50"
+                            >
+                                Next
+                            </button>
                         </div>
                     </div>
                 </div>
