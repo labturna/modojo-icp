@@ -113,6 +113,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
       else {
         setUsernameWarningMsg("Username already exists!")
       }
+
     } catch (error) {
       console.error("Failed to update username:", error);
     }
@@ -273,7 +274,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
 
             <div className="flex space-x-2">
               <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer" onClick={openProfileModal}>
-                {userId && <span className="text-[#b3d4f9] mr-2">{userDetails}</span>} 
+                {userId && <span className="text-[#b3d4f9] mr-2">{userDetails}</span>}
                 <FontAwesomeIcon icon={faUser} size="lg" className="mr-2" />
               </li>
               <li className="flex items-center px-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
@@ -302,6 +303,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
             >
               Save
             </button>
+
             {/* Warning message */}
             {usernameWarningMsg && (
               <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
