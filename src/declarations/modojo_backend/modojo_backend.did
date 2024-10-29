@@ -2,6 +2,7 @@ type UserProgressType =
  record {
    completedChallengeCount: nat;
    completedChallenges: vec text;
+   projectUrls: vec text;
    registrationDate: Time;
    score: float64;
    username: text;
@@ -23,5 +24,6 @@ service : {
   getUserDetails: (principal) -> (opt UserProgressType) query;
   getWeeklyUsers: () -> (vec nat) query;
   logInUser: (principal) -> (bool);
+  submitProject: (principal, text, text) -> (bool);
   updateUsername: (principal, text) -> (bool);
 }

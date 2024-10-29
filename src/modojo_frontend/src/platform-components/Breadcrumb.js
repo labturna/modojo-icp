@@ -225,7 +225,7 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
     <>
       <div className="bg-[#1e1e36] rounded-lg mt-3 p-4 flex justify-between items-center shadow-md">
         {/* Breadcrumb Section */}
-        {(page === 'dashboard' || page === 'overview' || page === 'practice' || page === 'challenges' || page === 'leaderboard') && (
+        {(page === 'dashboard' || page === 'overview' || page === 'practice' || page === 'challenges' || page === 'leaderboard' || page === 'submission') && (
           <nav className="flex justify-between items-center w-full">
             <div className="flex items-center">
               {items.map((item, index) => (

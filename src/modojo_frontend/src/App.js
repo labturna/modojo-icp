@@ -9,7 +9,7 @@ import Overview from './platform-components/Overview';
 import Challenges from './platform-components/Challenges';
 import Leaderboard from './platform-components/LeaderBoard';
 import PrivateRoute from './components/PrivateRoute'; 
-
+import DAppSubmissionPage from './platform-components/dAppSubmission';
 
 const App = () => {
   return (
@@ -22,6 +22,7 @@ const App = () => {
           <Route path="/practice" element={<PrivateRoute><Platform /></PrivateRoute>} />
           <Route path="/challenges" element={<PrivateRoute><Challenges /></PrivateRoute>} />
           <Route path="/leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
+          <Route path="/submission" element={<PrivateRoute><DAppSubmissionPage /></PrivateRoute>} />
         </Routes>
       </Router>
     </AuthProvider>

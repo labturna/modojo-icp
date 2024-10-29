@@ -8,6 +8,7 @@ export const idlFactory = ({ IDL }) => {
   const UserProgressType = IDL.Record({
     'completedChallengeCount' : IDL.Nat,
     'username' : IDL.Text,
+    'projectUrls' : IDL.Vec(IDL.Text),
     'completedChallenges' : IDL.Vec(IDL.Text),
     'score' : IDL.Float64,
     'registrationDate' : Time,
@@ -30,6 +31,11 @@ export const idlFactory = ({ IDL }) => {
       ),
     'getWeeklyUsers' : IDL.Func([], [IDL.Vec(IDL.Nat)], ['query']),
     'logInUser' : IDL.Func([IDL.Principal], [IDL.Bool], []),
+    'submitProject' : IDL.Func(
+        [IDL.Principal, IDL.Text, IDL.Text],
+        [IDL.Bool],
+        [],
+      ),
     'updateUsername' : IDL.Func([IDL.Principal, IDL.Text], [IDL.Bool], []),
   });
 };
