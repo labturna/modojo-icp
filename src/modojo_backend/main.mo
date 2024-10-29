@@ -6,10 +6,6 @@ import Text "mo:base/Text";
 import Iter "mo:base/Iter";
 import Time "mo:base/Time";
 import Nat "mo:base/Nat";
-<<<<<<< HEAD
-// import Float "mo:base/Float";
-=======
->>>>>>> 438c6196e183710e4dfad916edde36fd015790ee
 import Int "mo:base/Int";
 import Types "src/Types";
 import Rating "src/Rating";
