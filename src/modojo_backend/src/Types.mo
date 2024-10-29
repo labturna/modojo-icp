@@ -11,6 +11,7 @@ module {
         registrationDate: Time.Time; // Kayıt tarihi
         completedChallenges: [Text]; // Tamamlanan challenge'lar
         projectUrls: [Text];
+        badges: [Text];
     };
     public type WeeklyUsers = [var Nat];
     public type ChallengeInfo = {
