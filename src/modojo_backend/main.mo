@@ -11,12 +11,12 @@ import Types "src/Types";
 import Rating "src/Rating";
 
 actor ModojoProgressTracker {
-  private type UserType = Types.UserType;
-  private type WeeklyUsersType = Types.WeeklyUsers;
-  private type MonthlyUsersType = Types.MonthlyUsers;
-  private type UserProgressType = Types.UserProgressType;
-  private type ChallengeAttemps = Types.ChallengeAttemps;
-  private type ChallengeInfo = Types.ChallengeInfo;
+    private type UserType = Types.UserType;
+    private type WeeklyUsersType = Types.WeeklyUsers;
+    private type MonthlyUsersType = Types.MonthlyUsers;
+    private type UserProgressType = Types.UserProgressType;
+    private type ChallengeAttemps = Types.ChallengeAttemps;
+    private type ChallengeInfo = Types.ChallengeInfo;
 
   stable var userProgressStorage: [(Principal, UserProgressType)] = [];
   stable var challengeAttempsStorage: [(Text, Nat)] = [];

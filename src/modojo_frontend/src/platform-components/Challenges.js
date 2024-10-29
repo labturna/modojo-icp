@@ -1,5 +1,5 @@
 // src/components/MainContent.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import BreadcrumbCard from './Breadcrumb';
 import Sidebar from './Sidebar';
 import BrowserEditor from './Editor';

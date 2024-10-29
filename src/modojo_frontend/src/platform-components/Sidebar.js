@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faRunning, faPuzzlePiece, faBars, faChartLine, faRankingStar } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faRunning, faPuzzlePiece, faBars, faChartLine, faRankingStar, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/img/modojo-logo.png';
 
 const Sidebar = () => {
@@ -48,6 +48,12 @@ const Sidebar = () => {
             <a href="/leaderboard" className="flex items-center w-full space-x-3">
               <FontAwesomeIcon icon={faRankingStar} size="lg" />
               {isOpen && <span className="text-lg">Leaderboard</span>}
+            </a>
+          </li>
+          <li className="flex items-center space-x-3 p-2 text-[#b3d4f9] hover:bg-[#2e2e50] rounded-lg text-lg cursor-pointer">
+            <a href="/submission" className="flex items-center w-full space-x-3">
+              <FontAwesomeIcon icon={faProjectDiagram} size="lg" />
+              {isOpen && <span className="text-lg">dApp Submission</span>}
             </a>
           </li>
         </ul>
