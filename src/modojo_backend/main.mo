@@ -6,6 +6,10 @@ import Text "mo:base/Text";
 import Iter "mo:base/Iter";
 import Time "mo:base/Time";
 import Nat "mo:base/Nat";
+<<<<<<< HEAD
+// import Float "mo:base/Float";
+=======
+>>>>>>> 438c6196e183710e4dfad916edde36fd015790ee
 import Int "mo:base/Int";
 import Types "src/Types";
 import Rating "src/Rating";
@@ -241,7 +245,39 @@ actor ModojoProgressTracker {
           };
       };
   };
+  public func submitProject(user : Principal, projectSlug : Text, projectUrl : Text) : async Bool {
+        switch (userProgress.get(user)) {
+            case (?progress) {
+                // Determine the score based on the project slug
+                let projectPoints = switch (projectSlug) {
+                    case ("note-taking-app") 20.0;
+                    case ("nft-marketplace") 30.0;
+                    case ("chat-app") 30.0;
+                    case _ 0.0;
+                };
 
+                if (projectPoints == 0.0) {
+                    return false;
+                };
+
+                let updatedScore = progress.score + projectPoints;
+                let updatedProjectUrls = Array.append(progress.projectUrls, [projectUrl]);
+                let updatedProgress = {
+                    username = progress.username;
+                    completedChallengeCount = progress.completedChallengeCount;
+                    score = updatedScore;
+                    registrationDate = progress.registrationDate;
+                    completedChallenges = progress.completedChallenges;
+                    projectUrls = updatedProjectUrls;
+                };
+                userProgress.put(user, updatedProgress);
+                return true;
+            };
+            case null {
+                return false;
+            };
+        };
+    };
   // --------------------------------------------------------------------
 
   public func debugAllProgress() : async () {
