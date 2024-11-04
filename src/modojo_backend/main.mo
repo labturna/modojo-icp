@@ -135,7 +135,7 @@ actor ModojoProgressTracker {
     private func getCurrentMonth() : Nat {
         let time = Time.now();
         let month = (time % 31_536_000_000_000_000) / 2_592_000_000_000_000;
-        return Int.abs(month) - 1;
+        return Int.abs(month);
     };
     private func updateWeeklyUsers() : async () {
         let currentDay = getCurrentDay();
