@@ -1,5 +1,6 @@
 type UserProgressType = 
  record {
+   badges: vec text;
    completedChallengeCount: nat;
    completedChallenges: vec text;
    projectUrls: vec text;

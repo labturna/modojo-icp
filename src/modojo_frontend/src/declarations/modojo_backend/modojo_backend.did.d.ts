@@ -13,6 +13,7 @@ export interface UserProgressType {
   'username' : string,
   'projectUrls' : Array<string>,
   'completedChallenges' : Array<string>,
+  'badges' : Array<string>,
   'score' : number,
   'registrationDate' : Time,
 }

@@ -10,6 +10,7 @@ export const idlFactory = ({ IDL }) => {
     'username' : IDL.Text,
     'projectUrls' : IDL.Vec(IDL.Text),
     'completedChallenges' : IDL.Vec(IDL.Text),
+    'badges' : IDL.Vec(IDL.Text),
     'score' : IDL.Float64,
     'registrationDate' : Time,
   });
