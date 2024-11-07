@@ -13,19 +13,19 @@ import DAppSubmissionPage from './platform-components/dAppSubmission';
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-          <Route path="/overview" element={<PrivateRoute><Overview /></PrivateRoute>} />
-          <Route path="/practice" element={<PrivateRoute><Platform /></PrivateRoute>} />
-          <Route path="/challenges" element={<PrivateRoute><Challenges /></PrivateRoute>} />
-          <Route path="/leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
-          <Route path="/submission" element={<PrivateRoute><DAppSubmissionPage /></PrivateRoute>} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/overview" element={<PrivateRoute><Overview /></PrivateRoute>} />
+            <Route path="/practice" element={<PrivateRoute><Platform /></PrivateRoute>} />
+            <Route path="/challenges" element={<PrivateRoute><Challenges /></PrivateRoute>} />
+            <Route path="/leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
+            <Route path="/submission" element={<PrivateRoute><DAppSubmissionPage /></PrivateRoute>} />
+          </Routes>
+      </AuthProvider>
+    </Router>
   );
 };
 

@@ -1,6 +1,7 @@
 // src/context/AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 import { AuthClient } from '@dfinity/auth-client';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [authClient, setAuthClient] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
   // Initialize AuthClient and check authentication status
   const initializeAuthClient = async () => {
     try {
@@ -33,7 +35,8 @@ export const AuthProvider = ({ children }) => {
         await authClient.login({
           identityProvider: 'https://identity.ic0.app',
           onSuccess: () => {
-            setIsAuthenticated(true); // Update state on successful login
+            setIsAuthenticated(true);
+            navigate('/dashboard');
           },
         });
       } catch (error) {
