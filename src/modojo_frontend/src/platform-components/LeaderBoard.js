@@ -6,8 +6,10 @@ import Footer from '../components/Footer';
 import { canisterId as backendCanisterId, idlFactory as ModojoIDL } from '../declarations/modojo_backend';
 import { useAuth } from '../context/AuthContext';
 import { Principal } from "@dfinity/principal";
+import leaderboardData from '../assets/json/test.json';
 
 const Leaderboard = () => {
+
     const [leaderBoardUsers, setLeaderBoardUsers] = useState([]);
     const { userId } = useAuth();
     const [userName, setUsername] = useState("");
@@ -33,7 +35,11 @@ const Leaderboard = () => {
                 });
                 const users = await modojoActor.getAllUsersDetails();
                 const sortedUsers = users.sort((a, b) => b.score - a.score);
-                setLeaderBoardUsers(sortedUsers);
+                
+                // Combine users from backend and JSON file, then sort
+                const combinedUsers = [...sortedUsers, ...leaderboardData].sort((a, b) => b.score - a.score);
+                setLeaderBoardUsers(combinedUsers);
+                //console.log(combinedUsers);
             } catch (error) {
                 console.error("Failed to fetch total users:", error);
             }
