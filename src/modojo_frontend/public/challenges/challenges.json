@@ -41,6 +41,225 @@
                     "content": "easy-challenges/single-number/lesson.md",
                     "files": ["easy-challenges/single-number/main.mo"],
                     "solution": "easy-challenges/single-number/solution.md"
+                },
+                {
+                    "name": "Reverse Integer",
+                    "slug": "reverseInteger",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/reverse-integer/lesson.md",
+                    "files": ["easy-challenges/reverse-integer/main.mo"],
+                    "solution": "easy-challenges/reverse-integer/solution.md"
+                },
+                {
+                    "name": "Roman to Integer",
+                    "slug": "romanToInteger",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/roman-to-integer/lesson.md",
+                    "files": ["easy-challenges/roman-to-integer/main.mo"],
+                    "solution": "easy-challenges/roman-to-integer/solution.md"
+                }, {
+                    "name": "Valid Parentheses",
+                    "slug": "validParentheses",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/valid-parentheses/lesson.md",
+                    "files": ["easy-challenges/valid-parentheses/main.mo"],
+                    "solution": "easy-challenges/valid-parentheses/solution.md"
+                }, {
+                    "name": "Merge Two Sorted Lists",
+                    "slug": "mergeTwoLists",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/merge-two-sorted-lists/lesson.md",
+                    "files": ["easy-challenges/merge-two-sorted-lists/main.mo"],
+                    "solution": "easy-challenges/merge-two-sorted-lists/solution.md"
+                }, {
+                    "name": "Remove Duplicates from Sorted Array",
+                    "slug": "removeDuplicates",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/remove-duplicates-from-sorted-array/lesson.md",
+                    "files": ["easy-challenges/remove-duplicates-from-sorted-array/main.mo"],
+                    "solution": "easy-challenges/remove-duplicates-from-sorted-array/solution.md"
+                }, {
+                    "name": "Implement strStr()",
+                    "slug": "strStr",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/implement-strstr/lesson.md",
+                    "files": ["easy-challenges/implement-strstr/main.mo"],
+                    "solution": "easy-challenges/implement-strstr/solution.md"
+                }, {
+                    "name": "Search Insert Position",
+                    "slug": "searchInsert",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/search-insert-position/lesson.md",
+                    "files": ["easy-challenges/search-insert-position/main.mo"],
+                    "solution": "easy-challenges/search-insert-position/solution.md"
+                }, {
+                    "name": "Maximum Subarray",
+                    "slug": "maxSubArray",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/maximum-subarray/lesson.md",
+                    "files": ["easy-challenges/maximum-subarray/main.mo"],
+                    "solution": "easy-challenges/maximum-subarray/solution.md"
+                }, {
+                    "name": "Length of Last Word",
+                    "slug": "lengthOfLastWord",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/length-of-last-word/lesson.md",
+                    "files": ["easy-challenges/length-of-last-word/main.mo"],
+                    "solution": "easy-challenges/length-of-last-word/solution.md"
+                }, {
+                    "name": "Plus One",
+                    "slug": "plusOne",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/plus-one/lesson.md",
+                    "files": ["easy-challenges/plus-one/main.mo"],
+                    "solution": "easy-challenges/plus-one/solution.md"
+                }, {
+                    "name": "Add Binary",
+                    "slug": "addBinary",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/add-binary/lesson.md",
+                    "files": ["easy-challenges/add-binary/main.mo"],
+                    "solution": "easy-challenges/add-binary/solution.md"
+                }, {
+                    "name": "Climbing Stairs",
+                    "slug": "climbStairs",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/climbing-stairs/lesson.md",
+                    "files": ["easy-challenges/climbing-stairs/main.mo"],
+                    "solution": "easy-challenges/climbing-stairs/solution.md"
+                }, {
+                    "name": "Best Time to Buy and Sell Stock",
+                    "slug": "maxProfit",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/best-time-to-buy-and-sell-stock/lesson.md",
+                    "files": ["easy-challenges/best-time-to-buy-and-sell-stock/main.mo"],
+                    "solution": "easy-challenges/best-time-to-buy-and-sell-stock/solution.md"
+                }, {
+                    "name": "Maximum Depth of Binary Tree",
+                    "slug": "maxDepth",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/maximum-depth-of-binary-tree/lesson.md",
+                    "files": ["easy-challenges/maximum-depth-of-binary-tree/main.mo"],
+                    "solution": "easy-challenges/maximum-depth-of-binary-tree/solution.md"
+                }, {
+                    "name": "Same Tree",
+                    "slug": "isSameTree",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/same-tree/lesson.md",
+                    "files": ["easy-challenges/same-tree/main.mo"],
+                    "solution": "easy-challenges/same-tree/solution.md"
+                }, {
+                    "name": "Invert Binary Tree",
+                    "slug": "invertTree",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/invert-binary-tree/lesson.md",
+                    "files": ["easy-challenges/invert-binary-tree/main.mo"],
+                    "solution": "easy-challenges/invert-binary-tree/solution.md"
+                }, {
+                    "name": "Valid Anagram",
+                    "slug": "isAnagram",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/valid-anagram/lesson.md",
+                    "files": ["easy-challenges/valid-anagram/main.mo"],
+                    "solution": "easy-challenges/valid-anagram/solution.md"
+                }, {
+                    "name": "Binary Tree Level Order Traversal",
+                    "slug": "levelOrder",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/binary-tree-level-order-traversal/lesson.md",
+                    "files": ["easy-challenges/binary-tree-level-order-traversal/main.mo"],
+                    "solution": "easy-challenges/binary-tree-level-order-traversal/solution.md"
+                }, {
+                    "name": "Symmetric Tree",
+                    "slug": "isSymmetric",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/symmetric-tree/lesson.md",
+                    "files": ["easy-challenges/symmetric-tree/main.mo"],
+                    "solution": "easy-challenges/symmetric-tree/solution.md"
+                }, {
+                    "name": "Maximum Depth of N-ary Tree",
+                    "slug": "maxDepthNary",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/maximum-depth-of-n-ary-tree/lesson.md",
+                    "files": ["easy-challenges/maximum-depth-of-n-ary-tree/main.mo"],
+                    "solution": "easy-challenges/maximum-depth-of-n-ary-tree/solution.md"
+                }, {
+                    "name": "N-ary Tree Level Order Traversal",
+                    "slug": "levelOrderNary",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/n-ary-tree-level-order-traversal/lesson.md",
+                    "files": ["easy-challenges/n-ary-tree-level-order-traversal/main.mo"],
+                    "solution": "easy-challenges/n-ary-tree-level-order-traversal/solution.md"
+                }, {
+                    "name": "Balanced Binary Tree",
+                    "slug": "isBalanced",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/balanced-binary-tree/lesson.md",
+                    "files": ["easy-challenges/balanced-binary-tree/main.mo"],
+                    "solution": "easy-challenges/balanced-binary-tree/solution.md"
+                }, {
+                    "name": "Min Stack",
+                    "slug": "minStack",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/min-stack/lesson.md",
+                    "files": ["easy-challenges/min-stack/main.mo"],
+                    "solution": "easy-challenges/min-stack/solution.md"
+                }, {
+                    "name": "Intersection of Two Arrays II",
+                    "slug": "intersect",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/intersection-of-two-arrays-ii/lesson.md",
+                    "files": ["easy-challenges/intersection-of-two-arrays-ii/main.mo"],
+                    "solution": "easy-challenges/intersection-of-two-arrays-ii/solution.md"
+                }, {
+                    "name": "Number of 1 Bits",
+                    "slug": "hammingWeight",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/number-of-1-bits/lesson.md",
+                    "files": ["easy-challenges/number-of-1-bits/main.mo"],
+                    "solution": "easy-challenges/number-of-1-bits/solution.md"
+                }, {
+                    "name": "Reverse Bits",
+                    "slug": "reverseBits",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/reverse-bits/lesson.md",
+                    "files": ["easy-challenges/reverse-bits/main.mo"],
+                    "solution": "easy-challenges/reverse-bits/solution.md"
+                }, {
+                    "name": "Power of Two",
+                    "slug": "isPowerOfTwo",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/power-of-two/lesson.md",
+                    "files": ["easy-challenges/power-of-two/main.mo"],
+                    "solution": "easy-challenges/power-of-two/solution.md"
+                }, {
+                    "name": "Count Primes",
+                    "slug": "countPrimes",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/count-primes/lesson.md",
+                    "files": ["easy-challenges/count-primes/main.mo"],
+                    "solution": "easy-challenges/count-primes/solution.md"
+                }, {
+                    "name": "Valid Palindrome",
+                    "slug": "validPalindrome",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/valid-palindrome/lesson.md",
+                    "files": ["easy-challenges/valid-palindrome/main.mo"],
+                    "solution": "easy-challenges/valid-palindrome/solution.md"
+                }, {
+                    "name": "First Unique Character in a String",
+                    "slug": "firstUniqChar",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/first-unique-character-in-a-string/lesson.md",
+                    "files": ["easy-challenges/first-unique-character-in-a-string/main.mo"],
+                    "solution": "easy-challenges/first-unique-character-in-a-string/solution.md"
+                }, {
+                    "name": "Intersection of Two Linked Lists",
+                    "slug": "getIntersectionNode",
+                    "difficulty": "easy",
+                    "content": "easy-challenges/intersection-of-two-linked-lists/lesson.md",
+                    "files": ["easy-challenges/intersection-of-two-linked-lists/main.mo"],
+                    "solution": "easy-challenges/intersection-of-two-linked-lists/solution.md"
                 }
             ]
         },
@@ -70,7 +289,64 @@
                     "content": "medium-challenges/letter-combinations/lesson.md",
                     "files": ["medium-challenges/letter-combinations/main.mo"],
                     "solution": "medium-challenges/letter-combinations/solution.md"
+                },
+                {
+                    "name": "Group Anagrams",
+                    "slug": "groupAnagrams",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/group-anagrams/lesson.md",
+                    "files": ["medium-challenges/group-anagrams/main.mo"],
+                    "solution": "medium-challenges/group-anagrams/solution.md"
+                },
+                {
+                    "name": "Longest Palindromic Substring",
+                    "slug": "longestPalindrome",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/longest-palindromic-substring/lesson.md",
+                    "files": ["medium-challenges/longest-palindromic-substring/main.mo"],
+                    "solution": "medium-challenges/longest-palindromic-substring/solution.md"
+                },
+                {
+                    "name": "ZigZag Conversion",
+                    "slug": "convert",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/zigzag-conversion/lesson.md",
+                    "files": ["medium-challenges/zigzag-conversion/main.mo"],
+                    "solution": "medium-challenges/zigzag-conversion/solution.md"
+                },
+                {
+                    "name": "Reverse Linked List II",
+                    "slug": "reverseBetween",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/reverse-linked-list-ii/lesson.md",
+                    "files": ["medium-challenges/reverse-linked-list-ii/main.mo"],
+                    "solution": "medium-challenges/reverse-linked-list-ii/solution.md"
+                },
+                {
+                    "name": "Unique Paths",
+                    "slug": "uniquePaths",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/unique-paths/lesson.md",
+                    "files": ["medium-challenges/unique-paths/main.mo"],
+                    "solution": "medium-challenges/unique-paths/solution.md"
+                },
+                {
+                    "name": "Unique Paths II",
+                    "slug": "uniquePathsWithObstacles",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/unique-paths-ii/lesson.md",
+                    "files": ["medium-challenges/unique-paths-ii/main.mo"],
+                    "solution": "medium-challenges/unique-paths-ii/solution.md"
+                },
+                {
+                    "name": "Minimum Path Sum",
+                    "slug": "minPathSum",
+                    "difficulty": "medium",
+                    "content": "medium-challenges/minimum-path-sum/lesson.md",
+                    "files": ["medium-challenges/minimum-path-sum/main.mo"],
+                    "solution": "medium-challenges/minimum-path-sum/solution.md"
                 }
+
             ]
 
 
@@ -101,6 +377,22 @@
                     "content": "hard-challenges/longest-substring-without-repeating-characters/lesson.md",
                     "files": ["hard-challenges/longest-substring-without-repeating-characters/main.mo"],
                     "solution": "hard-challenges/longest-substring-without-repeating-characters/solution.md"
+                },
+                {
+                    "name": "Median of Two Sorted Arrays",
+                    "slug": "findMedianSortedArrays",
+                    "difficulty": "hard",
+                    "content": "hard-challenges/median-of-two-sorted-arrays/lesson.md",
+                    "files": ["hard-challenges/median-of-two-sorted-arrays/main.mo"],
+                    "solution": "hard-challenges/median-of-two-sorted-arrays/solution.md"
+                },
+                {
+                    "name": "Regular Expression Matching",
+                    "slug": "isMatch",
+                    "difficulty": "hard",
+                    "content": "hard-challenges/regular-expression-matching/lesson.md",
+                    "files": ["hard-challenges/regular-expression-matching/main.mo"],
+                    "solution": "hard-challenges/regular-expression-matching/solution.md"
                 }
             ]
         }

@@ -87,6 +87,30 @@
             ]
         },
         {
+            "slug": "reverseInteger",
+            "name": "Reverse Integer",
+            "difficulty": "easy",
+            "tests": [{
+                    "functionName": "reverse",
+                    "description": "Reverse 123",
+                    "input": 123,
+                    "expected": "+321"
+                },
+                {
+                    "functionName": "reverse",
+                    "description": "Reverse -123",
+                    "input": -123,
+                    "expected": "-321"
+                },
+                {
+                    "functionName": "reverse",
+                    "description": "Reverse 120",
+                    "input": 120,
+                    "expected": "+21"
+                }
+            ]
+        },
+        {
             "slug": "singleNumber",
             "name": "Single Number",
             "difficulty": "easy",
