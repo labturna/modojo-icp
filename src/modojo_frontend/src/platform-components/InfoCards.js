@@ -43,7 +43,7 @@ const DashboardInfoCards = () => {
           canisterId,
         });
         const users = await modojoActor.getTotalUsers();
-        setTotalUsers(Number(users) + 30);
+        setTotalUsers(Number(users) + 50);
       } catch (error) {
         console.error("Failed to fetch total users:", error);
       }

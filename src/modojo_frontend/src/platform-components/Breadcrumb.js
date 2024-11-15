@@ -23,6 +23,8 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
   const [userScore, setUserScore] = useState(0);
   const [userRegistrationDate, setUserRegistrationDate] = useState("Unknown");
   const [userBadges, setUserBadges] = useState([]);
+  const hasShownPopupRef = useRef(false);
+
 
   useEffect(() => {
     const logInUserToBackend = async () => {
@@ -80,10 +82,9 @@ const BreadcrumbCard = ({ items, page, onSelect }) => {
         setUserBadges(badges);
 
         // Kullanıcı adı "Unknown" ise veya boş ise pop-up aç
-        if (userName === "Unknown" || !userName) {
+        if ((userName === "Unknown" || !userName) && !hasShownPopupRef.current) {
           setIsUsernamePopupOpen(true);
-        } else {
-          setIsUsernamePopupOpen(false);
+          hasShownPopupRef.current = true; // Prevent modal from showing again on reload
         }
       } catch (error) {
         console.error("Failed to fetch user's details:", error);

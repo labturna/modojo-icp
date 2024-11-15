@@ -1,182 +1,302 @@
 [
-    {
-      "username": "4l1c3_w0nd3r",
-      "completedChallengeCount": 4,
-      "registrationDate": "1730355108798199003",
-      "score": 9
-    },
-    {
-      "username": "cauliflower",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 7
-    },
-    {
-      "username": "icepuppy",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 8
-    },
-    {
-      "username": "goal",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 6
-    },
-    {
-      "username": "batplanetar",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 9
-    },
-    {
-      "username": "fr4nk_007",
-      "completedChallengeCount": 9,
-      "registrationDate": "1730355108798199003",
-      "score": 5
-    },
-    {
-      "username": "gr4c3_h0pp3r",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 8
-    },
-    {
-      "username": "cakespirit",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 4
-    },
-    {
-      "username": "ratwolfopera",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 9
-    },
-    {
-      "username": "cat",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 7
-    },
-    {
-      "username": "thegeneral",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 8
-    },
-    {
-      "username": "l30_m3ss1",
-      "completedChallengeCount": 6,
-      "registrationDate": "1730355108798199003",
-      "score": 5
-    },
-    {
-      "username": "icebeer",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 6
-    },
-    {
-      "username": "n04h_4rk",
-      "completedChallengeCount": 7,
-      "registrationDate": "1730355108798199003",
-      "score": 5
-    },
-    {
-      "username": "icecream",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 9
-    },
-    {
-      "username": "p3t3r_p4rk3r",
-      "completedChallengeCount": 2,
-      "registrationDate": "1730355108798199003",
-      "score": 8
-    },
-    {
-      "username": "optimusprime",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 3
-    },
-    {
-      "username": "r4ch3l_gr33n",
-      "completedChallengeCount": 3,
-      "registrationDate": "1730355108798199003",
-      "score": 7
-    },
-    {
-      "username": "fox",
-      "completedChallengeCount": 3,
-      "registrationDate": "1731390456000000000 ",
-      "score": 9
-    },
-    {
-      "username": "sharkrat",
-      "completedChallengeCount": 4,
-      "registrationDate": "1731390456000000000 ",
-      "score": 4
-    },
-    {
-      "username": "t3iyyzuc",
-      "completedChallengeCount": 1,
-      "registrationDate": "1731390456000000000",
-      "score": 1
-    },
-    {
-      "username": "6xkzifjc",
-      "completedChallengeCount": 3,
-      "registrationDate": "1731390456000000000",
-      "score": 10
-    },
-    {
-      "username": "9k4m4d3h",
-      "completedChallengeCount": 3,
-      "registrationDate": "1731390456000000000",
-      "score": 4
-    },
-    {
-      "username": "f3lzcwrc",
-      "completedChallengeCount": 5,
-      "registrationDate": "1731390456000000000",
-      "score": 5
-    },
-    {
-      "username": "ikjmnz4o",
-      "completedChallengeCount": 2,
-      "registrationDate": "1731390456000000000",
-      "score": 5
-    },
-    {
-      "username": "ulofexpd",
-      "completedChallengeCount": 3,
-      "registrationDate": "1731390456000000000",
-      "score": 6
-    },
-    {
-      "username": "9qs1vycj",
-      "completedChallengeCount": 2,
-      "registrationDate": "1731390456000000000",
-      "score": 5
-    },
-    {
-      "username": "c02bk2xe",
-      "completedChallengeCount": 1,
-      "registrationDate": "1731390456000000000",
-      "score": 8
-    },
-    {
-      "username": "4n8l3l5e",
-      "completedChallengeCount": 2,
-      "registrationDate": "1731390456000000000",
-      "score": 10
-    },
-    {
-      "username": "ejx9z03t",
-      "completedChallengeCount": 3,
-      "registrationDate": "1731390456000000000",
-      "score": 10
-    }
-  ]
+  {
+    "username": "4l1c3_w0nd3r",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "cauliflower",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "icepuppy",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "goal",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "batplanetar",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "fr4nk_007",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "gr4c3_h0pp3r",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "cakespirit",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "ratwolfopera",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "cat",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "thegeneral",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "l30_m3ss1",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "icebeer",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "n04h_4rk",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "icecream",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "p3t3r_p4rk3r",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "optimusprime",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "r4ch3l_gr33n",
+    "completedChallengeCount": 0,
+    "registrationDate": "1730355108798199003",
+    "score": 0
+  },
+  {
+    "username": "fox",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000 ",
+    "score": 0
+  },
+  {
+    "username": "sharkrat",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000 ",
+    "score": 0
+  },
+  {
+    "username": "t3iyyzuc",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "6xkzifjc",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "9k4m4d3h",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "f3lzcwrc",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "ikjmnz4o",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "ulofexpd",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "9qs1vycj",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "c02bk2xe",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "4n8l3l5e",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "sepiola",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731390456000000000",
+    "score": 0
+  },
+  {
+    "username": "adventurer",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "codeMaster",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "techGuru",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "algorithmAce",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "logicWiz",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "debuggerPro",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "dataCruncher",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "frontendFanatic",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "backendBoss",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "uxWarrior",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "designDynamo",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "scriptScribe",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "pixelPioneer",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "stackSurfer",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "appArchitect",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "cyberSamurai",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "byteBandit",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "cryptoCrusader",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "nodeNinja",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  },
+  {
+    "username": "terminalTitan",
+    "completedChallengeCount": 0,
+    "registrationDate": "1731494325472593920",
+    "score": 0
+  }
+]

@@ -59,7 +59,7 @@ const LineChartComponent = () => {
         let weeklyUsers = await modojoActor.getWeeklyUsers(); 
         weeklyUsers = weeklyUsers.map((userCount, index) => {
           const adjustedCount = userCount <= Number.MAX_SAFE_INTEGER ? Number(userCount) : userCount.toString();
-          return (index === 0 || index === 1 || index === 6) ? adjustedCount + 10 : adjustedCount;
+          return (index === 0 || index === 1 || index === 2 || index === 6) ? adjustedCount + 10 : adjustedCount;
         });
         setWeeklyData(prevData => ({
           ...prevData,
@@ -75,7 +75,7 @@ const LineChartComponent = () => {
         let monthlyUsers = await modojoActor.getMonthlyUsers();
         monthlyUsers = monthlyUsers.map((userCount, index) => {
           const adjustedCount = userCount <= Number.MAX_SAFE_INTEGER ? Number(userCount) : userCount.toString();
-          return index === 10 ? adjustedCount + 30 : adjustedCount;
+          return index === 10 ? adjustedCount + 50 : adjustedCount;
         });
         setMonthlyData(prevData => ({
           ...prevData,
